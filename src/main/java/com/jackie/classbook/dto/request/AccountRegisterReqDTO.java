@@ -14,11 +14,11 @@ import com.jackie.classbook.dto.BaseReqDTO;
 public class AccountRegisterReqDTO extends BaseReqDTO {
 
     private String name;                //用户姓名
-    private Long roleId;                //权限id
+    private Long roleId;                //权限id，1-管理员，2-普通用户  //xxx 默认为2
     private Long mobile;                //手机号
     private String email;               //邮箱
     private String password;            //登录密码
-    private String nation;              //民族
+    private Long nationId;              //民族id  //xxx 查表
     private Byte sex;                   //性别
     private Integer age;                //年龄
     private String province;            //省
@@ -26,14 +26,10 @@ public class AccountRegisterReqDTO extends BaseReqDTO {
     private String country;             //县、区
     private String town;                //镇、街道
     private String village;             //村
-    private Long primarySchoolId;       //小学id
-    private String primarySchoolName;   //小学校名
+    private Long primarySchoolId;       //小学id    //xxx 学校名查表获得
     private Long juniorSchoolId;        //初中id
-    private String juniorSchoolName;    //初中校名
     private Long seniorSchoolId;        //高中id
-    private String seniorSchoolName;    //高中校名
     private Long universityId;          //大学id
-    private String universityName;      //大学校名
 
     @Override
     public void validation() {
@@ -94,12 +90,12 @@ public class AccountRegisterReqDTO extends BaseReqDTO {
         this.password = password;
     }
 
-    public String getNation() {
-        return nation;
+    public Long getNationId() {
+        return nationId;
     }
 
-    public void setNation(String nation) {
-        this.nation = nation;
+    public void setNationId(Long nationId) {
+        this.nationId = nationId;
     }
 
     public Byte getSex() {
@@ -166,28 +162,12 @@ public class AccountRegisterReqDTO extends BaseReqDTO {
         this.primarySchoolId = primarySchoolId;
     }
 
-    public String getPrimarySchoolName() {
-        return primarySchoolName;
-    }
-
-    public void setPrimarySchoolName(String primarySchoolName) {
-        this.primarySchoolName = primarySchoolName;
-    }
-
     public Long getJuniorSchoolId() {
         return juniorSchoolId;
     }
 
     public void setJuniorSchoolId(Long juniorSchoolId) {
         this.juniorSchoolId = juniorSchoolId;
-    }
-
-    public String getJuniorSchoolName() {
-        return juniorSchoolName;
-    }
-
-    public void setJuniorSchoolName(String juniorSchoolName) {
-        this.juniorSchoolName = juniorSchoolName;
     }
 
     public Long getSeniorSchoolId() {
@@ -198,27 +178,11 @@ public class AccountRegisterReqDTO extends BaseReqDTO {
         this.seniorSchoolId = seniorSchoolId;
     }
 
-    public String getSeniorSchoolName() {
-        return seniorSchoolName;
-    }
-
-    public void setSeniorSchoolName(String seniorSchoolName) {
-        this.seniorSchoolName = seniorSchoolName;
-    }
-
     public Long getUniversityId() {
         return universityId;
     }
 
     public void setUniversityId(Long universityId) {
         this.universityId = universityId;
-    }
-
-    public String getUniversityName() {
-        return universityName;
-    }
-
-    public void setUniversityName(String universityName) {
-        this.universityName = universityName;
     }
 }

@@ -1,9 +1,6 @@
 package com.jackie.classbook.controller;
 
-import com.jackie.classbook.dto.request.AccountRegisterReqDTO;
-import com.jackie.classbook.dto.request.AccountResetPasswordReqDTO;
-import com.jackie.classbook.dto.request.BaseIdReqDTO;
-import com.jackie.classbook.dto.request.LoginReqDTO;
+import com.jackie.classbook.dto.request.*;
 import com.jackie.classbook.entity.Account;
 import com.jackie.classbook.service.read.AccountReadService;
 import com.jackie.classbook.service.write.AccountWriteService;
@@ -81,6 +78,18 @@ public class AccountController extends BaseController{
                     method = RequestMethod.POST,
                     produces = {"application/json;charset=UTF-8"})
     public String resetPassword(AccountResetPasswordReqDTO reqDTO){
+        return null;
+    }
+
+    /**
+     * 修改账户信息
+     * @param reqDTO
+     * @return
+     */
+    @RequestMapping(value = "/update",
+                    method = RequestMethod.POST,
+                    produces = {"application/json;charset=UTF-8"})
+    public String update(AccountUpdateReqDTO reqDTO){
         return null;
     }
 }
