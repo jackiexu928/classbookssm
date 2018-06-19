@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface AccountReadService {
 
-    Context<BaseIdReqDTO, Account> getAll(BaseIdReqDTO reqDTO);
+    Context<BaseIdReqDTO, Account> getAccountById(BaseIdReqDTO reqDTO);
 }

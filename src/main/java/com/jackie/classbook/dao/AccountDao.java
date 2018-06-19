@@ -2,7 +2,6 @@ package com.jackie.classbook.dao;
 
 import com.jackie.classbook.entity.Account;
 
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,5 +13,11 @@ import java.util.List;
 public interface AccountDao {
     int insert(Account account);
 
-    Account getAll(Long id);
+    Account queryAccountById(Long id);
+
+    Account findAccount(Account account);
+
+    Account queryAccountByMobile(Long mobile);
+
+    Account queryAccountByEmail(String email);
 }

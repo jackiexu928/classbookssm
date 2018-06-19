@@ -27,9 +27,9 @@ public class AccountReadServiceImpl extends AbstractQueryService implements Acco
     }*/
 
     @Override
-    public Context<BaseIdReqDTO, Account> getAll(BaseIdReqDTO reqDTO) {
+    public Context<BaseIdReqDTO, Account> getAccountById(BaseIdReqDTO reqDTO) {
         Context<BaseIdReqDTO, Account> context = new Context<>();
-        Account account = accountDao.getAll(reqDTO.getId());
+        Account account = accountDao.queryAccountById(reqDTO.getId());
         context.setResult(account);
         return context;
     }

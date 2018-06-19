@@ -3,7 +3,7 @@
     PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jackie.classbook.dao.AccountDao">
-	<select id="getAll" resultType="Account" parameterType="long">
+	<select id="queryAccountById" resultType="Account" parameterType="long">
       select * from account
       where id = #{id}
     </select>
@@ -165,4 +165,92 @@
             </if>
         </trim>
     </insert>
+
+    <select id="findAccount" resultType="Account" parameterType="com.jackie.classbook.entity.Account">
+        select * from account
+        <where>
+            valid_flag = 1
+            <if test="id != null">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="mobile != null">
+                and mobile = #{mobile,jdbcType=BIGINT}
+            </if>
+            <if test="name != null">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="roleId != null">
+                and role_id = #{roleId,jdbcType=BIGINT}
+            </if>
+            <if test="email != null">
+                and email = #{email,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null">
+                and password = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="nation != null">
+                and nation = #{nation,jdbcType=VARCHAR}
+            </if>
+            <if test="age != null">
+                and age = #{age,jdbcType=INTEGER}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex,jdbcType=TINYINT}
+            </if>
+            <if test="province != null">
+                and province = #{province,jdbcType=VARCHAR}
+            </if>
+            <if test="city != null">
+                and city = #{city,jdbcType=VARCHAR}
+            </if>
+            <if test="country != null">
+                and country = #{country,jdbcType=VARCHAR}
+            </if>
+            <if test="town != null">
+                and town = #{town,jdbcType=VARCHAR}
+            </if>
+            <if test="village != null">
+                and village = #{village,jdbcType=VARCHAR}
+            </if>
+            <if test="primarySchoolId != null">
+                and primary_school_id = #{primarySchoolId,jdbcType=BIGINT}
+            </if>
+            <if test="primarySchoolName != null">
+                and primary_school_name = #{primarySchoolName,jdbcType=VARCHAR}
+            </if>
+            <if test="juniorSchoolId != null">
+                and junior_school_id = #{juniorSchoolId,jdbcType=BIGINT}
+            </if>
+            <if test="juniorSchoolName != null">
+                and junior_school_name = #{juniorSchoolName,jdbcType=VARCHAR}
+            </if>
+            <if test="seniorSchoolId != null">
+                and senior_school_id = #{seniorSchoolId,jdbcType=BIGINT}
+            </if>
+            <if test="seniorSchoolName != null">
+                and senior_school_name = #{seniorSchoolName,jdbcType=VARCHAR}
+            </if>
+            <if test="universityId != null">
+                and university_id = #{universityId,jdbcType=BIGINT}
+            </if>
+            <if test="universityName != null">
+                and university_name = #{universityName,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAccountByMobile" resultType="Account" parameterType="long">
+        select * from account
+        where mobile = #{mobile} and valid_flag = 1
+    </select>
+    <select id="queryAccountByEmail" resultType="Account" parameterType="String">
+        select * from account
+        where email = #{email} and valid_flag = 1
+    </select>
 </mapper>

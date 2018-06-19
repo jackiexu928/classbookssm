@@ -2,6 +2,7 @@ package com.jackie.classbook.controller;
 
 import com.jackie.classbook.dto.request.AccountRegisterReqDTO;
 import com.jackie.classbook.dto.request.BaseIdReqDTO;
+import com.jackie.classbook.dto.request.LoginReqDTO;
 import com.jackie.classbook.entity.Account;
 import com.jackie.classbook.service.read.AccountReadService;
 import com.jackie.classbook.service.write.AccountWriteService;
@@ -35,6 +36,18 @@ public class AccountController extends BaseController{
     }
 
     /**
+     * 登录
+     * @param reqDTO
+     * @return
+     */
+    @RequestMapping(value = "/login",
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
+    public String login(LoginReqDTO reqDTO){
+        return toJSON( accountWriteService.login(reqDTO));
+    }
+
+    /**
      * 注册
      * @param reqDTO
      * @return
@@ -55,7 +68,7 @@ public class AccountController extends BaseController{
                     method = RequestMethod.GET,
                     produces = {"application/json;charset=UTF-8"})
     public String getAll(BaseIdReqDTO reqDTO){
-        return toJSON(accountReadService.getAll(reqDTO));
+        return toJSON(accountReadService.getAccountById(reqDTO));
     }
 
 }
