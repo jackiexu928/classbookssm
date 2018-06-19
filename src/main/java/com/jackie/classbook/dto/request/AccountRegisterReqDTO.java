@@ -1,5 +1,7 @@
 package com.jackie.classbook.dto.request;
 
+import com.jackie.classbook.common.ClassbookCodeEnum;
+import com.jackie.classbook.common.ClassbookException;
 import com.jackie.classbook.dto.BaseReqDTO;
 
 /**
@@ -35,7 +37,21 @@ public class AccountRegisterReqDTO extends BaseReqDTO {
 
     @Override
     public void validation() {
-
+        if (roleId == null || roleId.equals("")){
+            throw new ClassbookException(ClassbookCodeEnum.PARAM_ISNULL);
+        }
+        if ((mobile == null || mobile.equals("")) && (email == null || email.equals(""))){
+            throw new ClassbookException(ClassbookCodeEnum.PARAM_ISNULL);
+        }
+        if (password == null || password.equals("")){
+            throw new ClassbookException(ClassbookCodeEnum.PARAM_ISNULL);
+        }
+        if (String.valueOf(mobile).length() != 11){
+            throw new ClassbookException(ClassbookCodeEnum.ILLGAL_MOBILE);
+        }
+        if (!email.contains("@")){
+            throw new ClassbookException(ClassbookCodeEnum.ILLGAL_EMAIL);
+        }
     }
 
     public String getName() {

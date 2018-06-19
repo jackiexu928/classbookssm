@@ -1,6 +1,7 @@
 package com.jackie.classbook.controller;
 
 import com.jackie.classbook.dto.request.AccountRegisterReqDTO;
+import com.jackie.classbook.dto.request.AccountResetPasswordReqDTO;
 import com.jackie.classbook.dto.request.BaseIdReqDTO;
 import com.jackie.classbook.dto.request.LoginReqDTO;
 import com.jackie.classbook.entity.Account;
@@ -60,15 +61,26 @@ public class AccountController extends BaseController{
     }
 
     /**
-     * 获取所有用户
+     * 根据id获取用户
      * @param reqDTO
      * @return
      */
-    @RequestMapping(value = "/getAll",
+    @RequestMapping(value = "/getAccountById",
                     method = RequestMethod.GET,
                     produces = {"application/json;charset=UTF-8"})
-    public String getAll(BaseIdReqDTO reqDTO){
+    public String getAccountById(BaseIdReqDTO reqDTO){
         return toJSON(accountReadService.getAccountById(reqDTO));
     }
 
+    /**
+     * 重置密码
+     * @param reqDTO
+     * @return
+     */
+    @RequestMapping(value = "/resetPassword",
+                    method = RequestMethod.POST,
+                    produces = {"application/json;charset=UTF-8"})
+    public String resetPassword(AccountResetPasswordReqDTO reqDTO){
+        return null;
+    }
 }

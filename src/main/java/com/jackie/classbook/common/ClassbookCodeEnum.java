@@ -54,7 +54,11 @@ public enum ClassbookCodeEnum {
 
     EMAIL_EXIST("EMAIL_EXIST","邮箱已注册"),
 
-    ACCOUNT_OR_PASSWORD("ACCOUNT_OR_PASSWORD","账户或密码错误")
+    ACCOUNT_OR_PASSWORD("ACCOUNT_OR_PASSWORD","账户或密码错误"),
+
+    ILLGAL_MOBILE("ILLGAL_MOBILE","手机号错误"),
+
+    ILLGAL_EMAIL("ILLGAL_EMAIL","邮箱格式错误")
 
     ;
 

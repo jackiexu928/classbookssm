@@ -1,6 +1,7 @@
 package com.jackie.classbook.dto.request;
 
 import com.jackie.classbook.dto.BaseReqDTO;
+import com.jackie.classbook.util.ValidtionUitl;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,7 +14,7 @@ public class BaseIdReqDTO extends BaseReqDTO {
     private Long id;
     @Override
     public void validation() {
-
+        ValidtionUitl.validation(this);
     }
 
     public Long getId() {
