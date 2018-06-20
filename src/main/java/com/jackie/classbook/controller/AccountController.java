@@ -90,6 +90,6 @@ public class AccountController extends BaseController{
                     method = RequestMethod.POST,
                     produces = {"application/json;charset=UTF-8"})
     public String update(AccountUpdateReqDTO reqDTO){
-        return null;
+        return toJSON(accountWriteService.update(reqDTO));
     }
 }

@@ -249,8 +249,70 @@
         select * from account
         where mobile = #{mobile} and valid_flag = 1
     </select>
+
     <select id="queryAccountByEmail" resultType="Account" parameterType="String">
         select * from account
         where email = #{email} and valid_flag = 1
     </select>
+
+    <update id="update" parameterType="com.jackie.classbook.entity.Account">
+        update account
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="nation != null">
+                nation = #{nation,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=BOOLEAN},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                country = #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="town != null">
+                town = #{town,jdbcType=VARCHAR},
+            </if>
+            <if test="village != null">
+                village = #{village,jdbcType=VARCHAR},
+            </if>
+            <if test="primarySchoolId != null">
+                primary_school_id = #{primarySchoolId,jdbcType=BIGINT},
+            </if>
+            <if test="primarySchoolName != null">
+                primary_school_name = #{primarySchoolName,jdbcType=VARCHAR},
+            </if>
+            <if test="juniorSchoolId != null">
+                junior_school_id = #{juniorSchoolId,jdbcType=BIGINT},
+            </if>
+            <if test="juniorSchoolName != null">
+                junior_school_name = #{juniorSchoolName,jdbcType=VARCHAR},
+            </if>
+            <if test="seniorSchoolId != null">
+                senior_school_id = #{seniorSchoolId,jdbcType=BIGINT},
+            </if>
+            <if test="seniorSchoolName != null">
+                senior_school_name = #{seniorSchoolName,jdbcType=VARCHAR},
+            </if>
+            <if test="universityId != null">
+                university_id = #{universityId,jdbcType=BIGINT},
+            </if>
+            <if test="universityName != null">
+                university_name = #{universityName,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

@@ -20,4 +20,6 @@ public interface AccountDao {
     Account queryAccountByMobile(Long mobile);
 
     Account queryAccountByEmail(String email);
+
+    void update(Account account);
 }

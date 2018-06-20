@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jackie.classbook.dao.AddressDao">
+    <resultMap id="addressList" type="Address">
+        <id column="code_id" jdbcType="BIGINT" property="codeId"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+
+    <select id="queryAddressByCodeId" resultType="Address" parameterType="long">
+        select * from address
+        where code_id = #{codeId}
+    </select>
+
+    <select id="queryAddressByParentId" resultMap="addressList" parameterType="long">
+        select * from address
+        where parent_id = #{parentId}
+    </select>
+</mapper>

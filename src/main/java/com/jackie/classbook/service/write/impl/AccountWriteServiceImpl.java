@@ -4,7 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.jackie.classbook.common.ClassbookCodeEnum;
 import com.jackie.classbook.common.ClassbookException;
 import com.jackie.classbook.dao.AccountDao;
+import com.jackie.classbook.dao.AddressDao;
+import com.jackie.classbook.dao.NationDao;
+import com.jackie.classbook.dao.SchoolDao;
 import com.jackie.classbook.dto.request.AccountRegisterReqDTO;
+import com.jackie.classbook.dto.request.AccountUpdateReqDTO;
 import com.jackie.classbook.dto.request.LoginReqDTO;
 import com.jackie.classbook.dto.response.AccountLoginRespDTO;
 import com.jackie.classbook.dto.response.AccountRespDTO;
@@ -34,6 +38,12 @@ public class AccountWriteServiceImpl extends AbstractService implements AccountW
 
     @Autowired
     private AccountDao accountDao;
+    @Autowired
+    private AddressDao addressDao;
+    @Autowired
+    private NationDao nationDao;
+    @Autowired
+    private SchoolDao schoolDao;
 
     @Override
     public Context<LoginReqDTO, AccountLoginRespDTO> login(LoginReqDTO reqDTO) {
@@ -88,5 +98,40 @@ public class AccountWriteServiceImpl extends AbstractService implements AccountW
         account.setValidFlag((byte)1);
         accountDao.insert(account);
         return context;
+    }
+
+    @Override
+    public Context<AccountUpdateReqDTO, Void> update(AccountUpdateReqDTO reqDTO) {
+        Context<AccountUpdateReqDTO, Void> context = new Context<>();
+        Account account = accountDao.queryAccountById(reqDTO.getId());
+        account.setName(reqDTO.getName());
+        account.setNation(getNation(reqDTO.getNationId()));
+        account.setSex(reqDTO.getSex());
+        account.setAge(reqDTO.getAge());
+        account.setProvince(getAddress(reqDTO.getProvinceCode()));
+        account.setCity(getAddress(reqDTO.getCityCode()));
+        account.setCountry(getAddress(reqDTO.getCountryCode()));
+        account.setTown(reqDTO.getTown());
+        account.setVillage(reqDTO.getVillage());
+        account.setPrimarySchoolId(reqDTO.getPrimarySchoolId());
+        account.setPrimarySchoolName(getSchool(reqDTO.getPrimarySchoolId()));
+        account.setJuniorSchoolId(reqDTO.getJuniorSchoolId());
+        account.setJuniorSchoolName(getSchool(reqDTO.getJuniorSchoolId()));
+        account.setSeniorSchoolId(reqDTO.getSeniorSchoolId());
+        account.setSeniorSchoolName(getSchool(reqDTO.getSeniorSchoolId()));
+        account.setUniversityId(reqDTO.getUniversityId());
+        account.setUniversityName(getSchool(reqDTO.getUniversityId()));
+        account.setUpdateTime(new Date());
+        accountDao.update(account);
+        return context;
+    }
+    public String getAddress(Long codeId){
+        return addressDao.queryAddressByCodeId(codeId).getName();
+    }
+    public String getNation(Long nationId){
+        return nationDao.queryNationById(nationId).getNation();
+    }
+    public String getSchool(Long schoolId){
+        return schoolDao.querySchoolById(schoolId).getSchoolName();
     }
 }
