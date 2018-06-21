@@ -93,6 +93,14 @@ public class AccountWriteServiceImpl extends AbstractService implements AccountW
         try {
             account.setPassword(SignUtil.md5Encrypt(reqDTO.getPassword()));
         }catch (Exception e){}
+        account.setRoleId(2L);
+        account.setProvince(getAddress(reqDTO.getProvinceCode()));
+        account.setCity(getAddress(reqDTO.getCityCode()));
+        account.setCountry(getAddress(reqDTO.getCountryCode()));
+        account.setPrimarySchoolName(getSchool(reqDTO.getPrimarySchoolId()));
+        account.setJuniorSchoolName(getSchool(reqDTO.getJuniorSchoolId()));
+        account.setSeniorSchoolName(getSchool(reqDTO.getSeniorSchoolId()));
+        account.setUniversityName(getSchool(reqDTO.getUniversityId()));
         account.setCreateTime(now);
         account.setUpdateTime(now);
         account.setValidFlag((byte)1);
@@ -125,12 +133,15 @@ public class AccountWriteServiceImpl extends AbstractService implements AccountW
         accountDao.update(account);
         return context;
     }
+
     public String getAddress(Long codeId){
         return addressDao.queryAddressByCodeId(codeId).getName();
     }
+
     public String getNation(Long nationId){
         return nationDao.queryNationById(nationId).getNation();
     }
+
     public String getSchool(Long schoolId){
         return schoolDao.querySchoolById(schoolId).getSchoolName();
     }
