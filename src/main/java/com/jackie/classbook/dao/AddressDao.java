@@ -13,14 +13,14 @@ import java.util.List;
  */
 public interface AddressDao {
     /**
-     * 根据编码查询地址
+     * 根据地址id查询地址
      * @param codeId
      * @return
      */
     Address queryAddressByCodeId(Long codeId);
 
     /**
-     * 根据上级地址id查询地址
+     * 根据上级地址id查询地址列表
      * @param parentId
      * @return
      */
