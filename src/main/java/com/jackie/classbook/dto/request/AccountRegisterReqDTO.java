@@ -21,9 +21,9 @@ public class AccountRegisterReqDTO extends BaseReqDTO {
     private Long nationId;              //民族id  //xxx 查表
     private Byte sex;                   //性别
     private Integer age;                //年龄
-    private Long provinceCode;          //省
-    private Long cityCode;              //城市
-    private Long countryCode;           //县、区
+    private Long provinceCode;          //省编码
+    private Long cityCode;              //城市编码
+    private Long countryCode;           //县、区编码
     private String town;                //镇、街道
     private String village;             //村
     private Long primarySchoolId;       //小学id    //xxx 学校名查表获得
