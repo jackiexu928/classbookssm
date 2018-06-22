@@ -3,6 +3,7 @@ package com.jackie.classbook.service.write.impl;
 import com.alibaba.fastjson.JSON;
 import com.jackie.classbook.common.ClassbookCodeEnum;
 import com.jackie.classbook.common.ClassbookException;
+import com.jackie.classbook.common.RoleEnum;
 import com.jackie.classbook.dao.AccountDao;
 import com.jackie.classbook.dao.AddressDao;
 import com.jackie.classbook.dao.NationDao;
@@ -93,7 +94,7 @@ public class AccountWriteServiceImpl extends AbstractService implements AccountW
         try {
             account.setPassword(SignUtil.md5Encrypt(reqDTO.getPassword()));
         }catch (Exception e){}
-        account.setRoleId(2L);
+        account.setRoleId((long) RoleEnum.CONSUMER.getKey());
         account.setProvince(getAddress(reqDTO.getProvinceCode()));
         account.setCity(getAddress(reqDTO.getCityCode()));
         account.setCountry(getAddress(reqDTO.getCountryCode()));

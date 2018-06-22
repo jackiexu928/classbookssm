@@ -7,4 +7,60 @@
         select * from school
         where id = #{id}
     </select>
+
+    <insert id="insert" parameterType="com.jackie.classbook.entity.School">
+        insert into school
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="schoolName != null">
+                school_name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="country != null">
+                country,
+            </if>
+            <if test="schoolMotto != null">
+                school_motto,
+            </if>
+            <if test="validFlag != null">
+                valid_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="schoolName != null">
+                #{schoolName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="schoolMotto != null">
+                #{schoolMotto,jdbcType=VARCHAR},
+            </if>
+            <if test="validFlag != null">
+                #{validFlag,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
 </mapper>

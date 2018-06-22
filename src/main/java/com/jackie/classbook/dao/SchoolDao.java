@@ -11,4 +11,6 @@ import com.jackie.classbook.entity.School;
  */
 public interface SchoolDao {
     School querySchoolById(Long id);
+
+    int insert(School school);
 }
