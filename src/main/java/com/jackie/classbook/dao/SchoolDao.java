@@ -2,6 +2,8 @@ package com.jackie.classbook.dao;
 
 import com.jackie.classbook.entity.School;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -13,4 +15,6 @@ public interface SchoolDao {
     School querySchoolById(Long id);
 
     int insert(School school);
+
+    List<School> querySchools(School school);
 }

@@ -3,6 +3,16 @@
         PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jackie.classbook.dao.SchoolDao">
+    <resultMap id="schoolList" type="School">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="school_name" jdbcType="VARCHAR" property="schoolName"/>
+        <result column="type" property="type"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+        <result column="school_motto" jdbcType="VARCHAR" property="schoolMotto"/>
+        <result column="valid_flag" jdbcType="TINYINT" property="validFlag"/>
+    </resultMap>
     <select id="querySchoolById" resultType="School" parameterType="long">
         select * from school
         where id = #{id}
@@ -63,4 +73,26 @@
             </if>
         </trim>
     </insert>
+
+    <select id="querySchools" resultMap="schoolList" parameterType="com.jackie.classbook.entity.School">
+        select * from school
+        <where>
+            valid_flag = 1
+            <if test="schoolName != null and schoolName != ''">
+                and school_name like CONCAT('%',#{schoolName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="province != null and province !=''">
+                and province like CONCAT('%',#{province,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="city != null and city != ''">
+                and city like CONCAT('%',#{city,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="country != null and country != ''">
+                and country like CONCAT('%',#{country,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
 </mapper>
