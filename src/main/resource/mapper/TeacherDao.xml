@@ -3,6 +3,16 @@
         PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jackie.classbook.dao.TeacherDao">
+    <resultMap id="teacherList" type="Teacher">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="school_id" jdbcType="BIGINT" property="schoolId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sex" jdbcType="TINYINT" property="sex"/>
+        <result column="mobile" jdbcType="BIGINT" property="mobile"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="subjects" jdbcType="VARCHAR" property="subjects"/>
+        <result column="valid_flag" jdbcType="TINYINT" property="validFlag"/>
+    </resultMap>
     
     <insert id="insert" parameterType="com.jackie.classbook.entity.Teacher">
         insert into teacher
@@ -59,4 +69,24 @@
             </if>
         </trim>
     </insert>
+
+    <select id="queryTeachers" resultMap="teacherList" parameterType="com.jackie.classbook.entity.Teacher">
+        select * from teacher
+        <where>
+            valid_flag = 1
+            <if test="schoolId != null">
+                and school_id = #{schoolId,jdbcType=BIGINT}
+            </if>
+            <if test="name != null and name != ''">
+                and name like CONCAT('%',#{name,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="sex != null">
+                and sex = #{sex,jdbcType=TINYINT}
+            </if>
+            <if test="subjects != null and subjects != ''">
+                and subjects like CONCAT('%',#{subjects,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        order by school_id,id
+    </select>
 </mapper>

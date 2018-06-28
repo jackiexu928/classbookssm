@@ -2,6 +2,8 @@ package com.jackie.classbook.dao;
 
 import com.jackie.classbook.entity.Teacher;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -11,4 +13,6 @@ import com.jackie.classbook.entity.Teacher;
  */
 public interface TeacherDao {
     int insert(Teacher teacher);
+
+    List<Teacher> queryTeachers(Teacher teacher);
 }
