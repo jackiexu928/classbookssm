@@ -60,4 +60,24 @@ public class TeacherClassMapperFactory {
         return resultList;
     }
 
+    public static TeacherClassMapperRespDTO getClasses(TeacherClassMapper teacherClassMapper){
+        if (teacherClassMapper == null){
+            return null;
+        }
+        TeacherClassMapperRespDTO teacherClassMapperRespDTO = new TeacherClassMapperRespDTO();
+        teacherClassMapperRespDTO.setClassId(teacherClassMapper.getClassId());
+        teacherClassMapperRespDTO.setClassName(teacherClassMapper.getClassName());
+        return teacherClassMapperRespDTO;
+    }
+
+    public static List<TeacherClassMapperRespDTO> getClasses(List<TeacherClassMapper> list){
+        if (list == null){
+            return null;
+        }
+        List<TeacherClassMapperRespDTO> resultList = new ArrayList<>();
+        for (TeacherClassMapper teacherClassMapper : list){
+            resultList.add(getClasses(teacherClassMapper));
+        }
+        return resultList;
+    }
 }

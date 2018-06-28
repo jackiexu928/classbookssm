@@ -1,5 +1,6 @@
 package com.jackie.classbook.controller;
 
+import com.jackie.classbook.dto.request.BaseIdReqDTO;
 import com.jackie.classbook.dto.request.TeacherAddReqDTO;
 import com.jackie.classbook.dto.request.TeacherQueryReqDTO;
 import com.jackie.classbook.service.read.TeacherReadService;
@@ -46,5 +47,12 @@ public class TeacherController extends BaseController {
                     produces = {"application/json;charset=UTF-8"})
     public String queryTeacher(TeacherQueryReqDTO reqDTO){
         return toJSON(teacherReadService.queryTeachers(reqDTO));
+    }
+
+    @RequestMapping(value = "/detail",
+                    method = RequestMethod.GET,
+                    produces = {"application/json;charset=UTF-8"})
+    public String getTeacherDetail(BaseIdReqDTO reqDTO){
+        return toJSON(teacherReadService.getTeacherDetail(reqDTO));
     }
 }
