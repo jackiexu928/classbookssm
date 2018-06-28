@@ -1,0 +1,60 @@
+package com.jackie.classbook.dto.response;
+
+import com.jackie.classbook.dto.BaseRespDTO;
+
+import java.util.List;
+
+/**
+ * Created with IntelliJ IDEA.
+ * Description:
+ *
+ * @author xujj
+ * @date 2018/6/28
+ */
+public class ClassDetailRespDTO extends BaseRespDTO {
+    private Long classId;       //班级id
+    private Long schoolId;      //学校id
+    private String schoolName;  //校名
+    private String className;   //班级名
+    private List<TeacherClassMapperRespDTO> teachersList;   //老师list
+
+    public Long getClassId() {
+        return classId;
+    }
+
+    public void setClassId(Long classId) {
+        this.classId = classId;
+    }
+
+    public Long getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(Long schoolId) {
+        this.schoolId = schoolId;
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public List<TeacherClassMapperRespDTO> getTeachersList() {
+        return teachersList;
+    }
+
+    public void setTeachersList(List<TeacherClassMapperRespDTO> teachersList) {
+        this.teachersList = teachersList;
+    }
+}

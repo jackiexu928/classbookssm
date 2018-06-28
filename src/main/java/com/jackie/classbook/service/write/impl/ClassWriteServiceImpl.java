@@ -2,8 +2,13 @@ package com.jackie.classbook.service.write.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.jackie.classbook.dao.ClassDao;
+import com.jackie.classbook.dao.TeacherClassMapperDao;
+import com.jackie.classbook.dao.TeacherDao;
 import com.jackie.classbook.dto.request.ClassAddReqDTO;
+import com.jackie.classbook.dto.request.ClassSetTeacherReqDTO;
 import com.jackie.classbook.entity.Class;
+import com.jackie.classbook.entity.Teacher;
+import com.jackie.classbook.entity.TeacherClassMapper;
 import com.jackie.classbook.process.AbstractService;
 import com.jackie.classbook.process.Context;
 import com.jackie.classbook.service.write.ClassWriteService;
@@ -23,6 +28,10 @@ public class ClassWriteServiceImpl extends AbstractService implements ClassWrite
 
     @Autowired
     private ClassDao classDao;
+    @Autowired
+    private TeacherClassMapperDao teacherClassMapperDao;
+    @Autowired
+    private TeacherDao teacherDao;
 
     @Override
     public Context<ClassAddReqDTO, Void> insert(ClassAddReqDTO reqDTO) {
@@ -30,6 +39,19 @@ public class ClassWriteServiceImpl extends AbstractService implements ClassWrite
         Class clazz = JSON.parseObject(JSON.toJSONString(reqDTO), Class.class);
         clazz.setValidFlag((byte)1);
         classDao.insert(clazz);
+        return context;
+    }
+
+    @Override
+    public Context<ClassSetTeacherReqDTO, Void> setTeacher(ClassSetTeacherReqDTO reqDTO) {
+        TeacherClassMapper teacherClassMapper = JSON.parseObject(JSON.toJSONString(reqDTO), TeacherClassMapper.class);
+        teacherClassMapper.setValidFlag((byte)1);
+        Class clazz = classDao.queryById(reqDTO.getClassId());
+        Teacher teacher = teacherDao.queryById(reqDTO.getTeacherId());
+        teacherClassMapper.setClassName(clazz.getClassName());
+        teacherClassMapper.setTeacherName(teacher.getName());
+        teacherClassMapperDao.insert(teacherClassMapper);
+        Context<ClassSetTeacherReqDTO, Void> context = new Context<>();
         return context;
     }
 }

@@ -15,4 +15,6 @@ public interface TeacherDao {
     int insert(Teacher teacher);
 
     List<Teacher> queryTeachers(Teacher teacher);
+
+    Teacher queryById(Long id);
 }

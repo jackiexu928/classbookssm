@@ -53,4 +53,9 @@
             </if>
         </where>
     </select>
+
+    <select id="queryById" resultType="Class" parameterType="Long">
+        select * from class
+        where id = #{id} and valid_flag = 1
+    </select>
 </mapper>

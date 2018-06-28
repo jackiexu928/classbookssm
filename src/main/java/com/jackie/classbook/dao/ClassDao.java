@@ -15,4 +15,6 @@ public interface ClassDao {
     int insert(Class clazz);
 
     List<Class> getClasses(Class clazz);
+
+    Class queryById(Long id);
 }

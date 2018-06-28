@@ -1,6 +1,8 @@
 package com.jackie.classbook.service.read;
 
+import com.jackie.classbook.dto.request.BaseIdReqDTO;
 import com.jackie.classbook.dto.request.ClassQueryReqDTO;
+import com.jackie.classbook.dto.response.ClassDetailRespDTO;
 import com.jackie.classbook.dto.response.ClassRespDTO;
 import com.jackie.classbook.process.Context;
 
@@ -15,4 +17,6 @@ import java.util.List;
  */
 public interface ClassReadService {
     Context<ClassQueryReqDTO, List<ClassRespDTO>> getClasses(ClassQueryReqDTO reqDTO);
+
+    Context<BaseIdReqDTO, ClassDetailRespDTO> getClassDetail(BaseIdReqDTO reqDTO);
 }
