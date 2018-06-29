@@ -39,8 +39,8 @@ public class AccountController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/login",
-            method = RequestMethod.POST,
-            produces = {"application/json;charset=UTF-8"})
+                    method = RequestMethod.POST,
+                    produces = {"application/json;charset=UTF-8"})
     public String login(LoginReqDTO reqDTO){
         return toJSON( accountWriteService.login(reqDTO));
     }
