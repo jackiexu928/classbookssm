@@ -1,9 +1,6 @@
 package com.jackie.classbook.controller;
 
-import com.jackie.classbook.dto.request.BaseIdReqDTO;
-import com.jackie.classbook.dto.request.ClassAddReqDTO;
-import com.jackie.classbook.dto.request.ClassQueryReqDTO;
-import com.jackie.classbook.dto.request.ClassSetTeacherReqDTO;
+import com.jackie.classbook.dto.request.*;
 import com.jackie.classbook.service.read.ClassReadService;
 import com.jackie.classbook.service.write.ClassWriteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +61,17 @@ public class ClassController extends BaseController {
     }
 
     /**
+     * 移除老师
+     * @return
+     */
+    @RequestMapping(value = "/removeTeacher",
+                    method = RequestMethod.POST,
+                    produces = {"application/json;charset=UTF-8"})
+    public String removeTeacher(ClassRemoveTeacherReqDTO reqDTO){
+        return toJSON(classWriteService.removeTeacher(reqDTO));
+    }
+
+    /**
      * 查看班级详情
      * @param reqDTO
      * @return
@@ -73,5 +81,17 @@ public class ClassController extends BaseController {
                     produces = {"application/json;charset=UTF-8"})
     public String getDetail(BaseIdReqDTO reqDTO){
         return toJSON(classReadService.getClassDetail(reqDTO));
+    }
+
+    /**
+     * 修改班级信息
+     * @param reqDTO
+     * @return
+     */
+    @RequestMapping(value = "/update",
+                    method = RequestMethod.POST,
+                    produces = {"application/json;charset=UTF-8"})
+    public String update(ClassUpdateReqDTO reqDTO){
+        return toJSON(classWriteService.updateClass(reqDTO));
     }
 }

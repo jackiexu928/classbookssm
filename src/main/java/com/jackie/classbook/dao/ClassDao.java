@@ -17,4 +17,6 @@ public interface ClassDao {
     List<Class> getClasses(Class clazz);
 
     Class queryById(Long id);
+
+    int update(Class clazz);
 }

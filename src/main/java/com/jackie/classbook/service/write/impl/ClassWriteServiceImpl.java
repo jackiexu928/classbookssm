@@ -7,7 +7,9 @@ import com.jackie.classbook.dao.ClassDao;
 import com.jackie.classbook.dao.TeacherClassMapperDao;
 import com.jackie.classbook.dao.TeacherDao;
 import com.jackie.classbook.dto.request.ClassAddReqDTO;
+import com.jackie.classbook.dto.request.ClassRemoveTeacherReqDTO;
 import com.jackie.classbook.dto.request.ClassSetTeacherReqDTO;
+import com.jackie.classbook.dto.request.ClassUpdateReqDTO;
 import com.jackie.classbook.entity.Class;
 import com.jackie.classbook.entity.Teacher;
 import com.jackie.classbook.entity.TeacherClassMapper;
@@ -59,6 +61,21 @@ public class ClassWriteServiceImpl extends AbstractService implements ClassWrite
         teacherClassMapper.setSubjects(teacher.getSubjects());
         teacherClassMapperDao.insert(teacherClassMapper);
         Context<ClassSetTeacherReqDTO, Void> context = new Context<>();
+        return context;
+    }
+
+    @Override
+    public Context<ClassUpdateReqDTO, Void> updateClass(ClassUpdateReqDTO reqDTO) {
+        Class clazz = JSON.parseObject(JSON.toJSONString(reqDTO), Class.class);
+        classDao.update(clazz);
+        Context<ClassUpdateReqDTO, Void> context = new Context<>();
+        return context;
+    }
+
+    @Override
+    public Context<ClassRemoveTeacherReqDTO, Void> removeTeacher(ClassRemoveTeacherReqDTO reqDTO) {
+        teacherClassMapperDao.delete(reqDTO.getClassId(), reqDTO.getTeacherId());
+        Context<ClassRemoveTeacherReqDTO, Void> context = new Context<>();
         return context;
     }
 }

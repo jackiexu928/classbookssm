@@ -68,4 +68,14 @@
         select * from class
         where id = #{id} and valid_flag = 1
     </select>
+
+    <update id="update" parameterType="com.jackie.classbook.entity.Class">
+        update class
+        <set>
+            <if test="className != null">
+                class_name = #{className,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>
