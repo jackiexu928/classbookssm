@@ -50,9 +50,11 @@ public enum ClassbookCodeEnum {
 
     ACCOUNT_NOT_EXIST("ACCOUNT_NOT_EXIST","用户不存在"),
 
-    MOBILE_EXIST("MOBILE_EXIST","手机号已注册"),
+    MOBILE_EXIST("MOBILE_EXIST","手机号已被使用"),
 
-    EMAIL_EXIST("EMAIL_EXIST","邮箱已注册"),
+    EMAIL_EXIST("EMAIL_EXIST","邮箱已被使用"),
+
+    QQ_EXIST("QQ_EXIST","QQ已被使用"),
 
     ACCOUNT_OR_PASSWORD("ACCOUNT_OR_PASSWORD","账户或密码错误"),
 
