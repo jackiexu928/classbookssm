@@ -268,7 +268,7 @@
                 age = #{age},
             </if>
             <if test="sex != null">
-                sex = #{sex,jdbcType=BOOLEAN},
+                sex = #{sex,jdbcType=TINYINT},
             </if>
             <if test="province != null">
                 province = #{province,jdbcType=VARCHAR},

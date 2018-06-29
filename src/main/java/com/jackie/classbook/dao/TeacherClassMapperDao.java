@@ -15,4 +15,6 @@ public interface TeacherClassMapperDao {
     int insert(TeacherClassMapper teacherClassMapper);
 
     List<TeacherClassMapper> queryList(TeacherClassMapper teacherClassMapper);
+
+    int update(TeacherClassMapper teacherClassMapper);
 }

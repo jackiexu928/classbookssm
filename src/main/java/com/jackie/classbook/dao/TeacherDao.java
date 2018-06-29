@@ -17,4 +17,10 @@ public interface TeacherDao {
     List<Teacher> queryTeachers(Teacher teacher);
 
     Teacher queryById(Long id);
+
+    int update(Teacher teacher);
+
+    Teacher queryByMobile(Long mobile);
+
+    Teacher queryByEmail(String email);
 }

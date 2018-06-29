@@ -3,6 +3,7 @@ package com.jackie.classbook.controller;
 import com.jackie.classbook.dto.request.BaseIdReqDTO;
 import com.jackie.classbook.dto.request.TeacherAddReqDTO;
 import com.jackie.classbook.dto.request.TeacherQueryReqDTO;
+import com.jackie.classbook.dto.request.TeacherUpdateReqDTO;
 import com.jackie.classbook.service.read.TeacherReadService;
 import com.jackie.classbook.service.write.TeacherWriteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +50,27 @@ public class TeacherController extends BaseController {
         return toJSON(teacherReadService.queryTeachers(reqDTO));
     }
 
+    /**
+     * 查看教师详情
+     * @param reqDTO
+     * @return
+     */
     @RequestMapping(value = "/detail",
                     method = RequestMethod.GET,
                     produces = {"application/json;charset=UTF-8"})
     public String getTeacherDetail(BaseIdReqDTO reqDTO){
         return toJSON(teacherReadService.getTeacherDetail(reqDTO));
+    }
+
+    /**
+     * 修改教师信息
+     * @param reqDTO
+     * @return
+     */
+    @RequestMapping(value = "/update",
+                    method = RequestMethod.POST,
+                    produces = {"application/json;charset=UTF-8"})
+    public String update(TeacherUpdateReqDTO reqDTO){
+        return toJSON(teacherWriteService.updateTeacher(reqDTO));
     }
 }

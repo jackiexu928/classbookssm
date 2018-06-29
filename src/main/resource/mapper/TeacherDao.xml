@@ -94,4 +94,36 @@
         select * from teacher
         where id = #{id} and valid_flag = 1
     </select>
+
+    <select id="queryByMobile" resultType="Teacher" parameterType="Long">
+        select * from teacher
+        where mobile = #{mobile} and valid_flag = 1
+    </select>
+
+    <select id="queryByEmail" resultType="Teacher" parameterType="String">
+        select * from teacher
+        where email = #{email} and valid_flag = 1
+    </select>
+
+    <update id="update" parameterType="com.jackie.classbook.entity.Teacher">
+        update teacher
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=BIGINT},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="subjects != null">
+                subjects = #{subjects,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

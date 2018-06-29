@@ -1,6 +1,7 @@
 package com.jackie.classbook.service.write;
 
 import com.jackie.classbook.dto.request.TeacherAddReqDTO;
+import com.jackie.classbook.dto.request.TeacherUpdateReqDTO;
 import com.jackie.classbook.process.Context;
 
 /**
@@ -12,4 +13,6 @@ import com.jackie.classbook.process.Context;
  */
 public interface TeacherWriteService {
     Context<TeacherAddReqDTO, Void> addTeacher(TeacherAddReqDTO reqDTO);
+
+    Context<TeacherUpdateReqDTO, Void> updateTeacher(TeacherUpdateReqDTO reqDTO);
 }

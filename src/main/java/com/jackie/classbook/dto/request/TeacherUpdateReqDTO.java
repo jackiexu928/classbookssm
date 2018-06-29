@@ -9,20 +9,18 @@ import com.jackie.classbook.dto.BaseReqDTO;
  * Description:
  *
  * @author xujj
- * @date 2018/6/28
+ * @date 2018/6/29
  */
-public class TeacherAddReqDTO extends BaseReqDTO {
-
-    private Long schoolId;      //学校id
+public class TeacherUpdateReqDTO extends BaseReqDTO {
+    private Long id;            //id
     private String name;        //姓名
     private Byte sex;           //性别
     private Long mobile;        //手机
     private String email;       //邮箱
     private String subjects;    //所教科目
-
     @Override
     public void validation() {
-        if (schoolId == null || schoolId == 0L || sex == null){
+        if (id == null || id == 0L){
             throw new ClassbookException(ClassbookCodeEnum.ILLGAL_ARGUMENT);
         }
         if (email != null && !email.contains("@")){
@@ -33,12 +31,12 @@ public class TeacherAddReqDTO extends BaseReqDTO {
         }
     }
 
-    public Long getSchoolId() {
-        return schoolId;
+    public Long getId() {
+        return id;
     }
 
-    public void setSchoolId(Long schoolId) {
-        this.schoolId = schoolId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
