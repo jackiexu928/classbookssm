@@ -58,6 +58,7 @@ public class ClassReadServiceImpl extends AbstractQueryService implements ClassR
         List<TeacherClassMapperRespDTO> resultList = TeacherClassMapperFactory.getTeachers(list);
         ClassDetailRespDTO classDetailRespDTO = new ClassDetailRespDTO();
         classDetailRespDTO.setClassId(clazz.getId());
+        classDetailRespDTO.setYear(clazz.getYear());
         classDetailRespDTO.setClassName(clazz.getClassName());
         classDetailRespDTO.setSchoolId(clazz.getSchoolId());
         classDetailRespDTO.setSchoolName(getSchool(clazz.getSchoolId()));

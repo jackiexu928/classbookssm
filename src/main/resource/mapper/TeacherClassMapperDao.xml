@@ -6,6 +6,7 @@
     <resultMap id="teacherClassMapperList" type="TeacherClassMapper">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="class_id" jdbcType="BIGINT" property="classId"/>
+        <result column="year" jdbcType="INTEGER" property="year"/>
         <result column="class_name" jdbcType="VARCHAR" property="className"/>
         <result column="teacher_id" jdbcType="BIGINT" property="teacherId"/>
         <result column="teacher_name" jdbcType="VARCHAR" property="teacherName"/>
@@ -22,6 +23,9 @@
             </if>
             <if test="classId != null">
                 class_id,
+            </if>
+            <if test="year != null">
+                year,
             </if>
             <if test="className != null">
                 class_name,
@@ -48,6 +52,9 @@
             </if>
             <if test="classId != null">
                 #{classId,jdbcType=BIGINT},
+            </if>
+            <if test="year != null">
+                #{year,jdbcType=INTEGER},
             </if>
             <if test="className != null">
                 #{className,jdbcType=VARCHAR},

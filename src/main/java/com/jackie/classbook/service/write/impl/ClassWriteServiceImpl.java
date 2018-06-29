@@ -1,6 +1,8 @@
 package com.jackie.classbook.service.write.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.jackie.classbook.common.ClassbookCodeEnum;
+import com.jackie.classbook.common.ClassbookException;
 import com.jackie.classbook.dao.ClassDao;
 import com.jackie.classbook.dao.TeacherClassMapperDao;
 import com.jackie.classbook.dao.TeacherDao;
@@ -48,8 +50,13 @@ public class ClassWriteServiceImpl extends AbstractService implements ClassWrite
         teacherClassMapper.setValidFlag((byte)1);
         Class clazz = classDao.queryById(reqDTO.getClassId());
         Teacher teacher = teacherDao.queryById(reqDTO.getTeacherId());
+        if (clazz == null || teacher == null){
+            throw new ClassbookException(ClassbookCodeEnum.NO_RECORD);
+        }
+        teacherClassMapper.setYear(clazz.getYear());
         teacherClassMapper.setClassName(clazz.getClassName());
         teacherClassMapper.setTeacherName(teacher.getName());
+        teacherClassMapper.setSubjects(teacher.getSubjects());
         teacherClassMapperDao.insert(teacherClassMapper);
         Context<ClassSetTeacherReqDTO, Void> context = new Context<>();
         return context;

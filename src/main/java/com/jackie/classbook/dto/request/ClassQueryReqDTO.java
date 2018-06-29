@@ -13,6 +13,7 @@ import com.jackie.classbook.dto.BaseReqDTO;
  */
 public class ClassQueryReqDTO extends BaseReqDTO {
     private Long schoolId;      //学校id
+    private Integer year;       //届
     private String className;   //班级名
 
     @Override
@@ -28,6 +29,14 @@ public class ClassQueryReqDTO extends BaseReqDTO {
 
     public void setSchoolId(Long schoolId) {
         this.schoolId = schoolId;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     public String getClassName() {

@@ -15,6 +15,7 @@ public class ClassDetailRespDTO extends BaseRespDTO {
     private Long classId;       //班级id
     private Long schoolId;      //学校id
     private String schoolName;  //校名
+    private Integer year;       //届
     private String className;   //班级名
     private List<TeacherClassMapperRespDTO> teachersList;   //老师list
 
@@ -40,6 +41,14 @@ public class ClassDetailRespDTO extends BaseRespDTO {
 
     public void setSchoolName(String schoolName) {
         this.schoolName = schoolName;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     public String getClassName() {

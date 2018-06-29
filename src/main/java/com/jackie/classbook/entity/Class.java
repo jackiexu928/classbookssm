@@ -10,6 +10,7 @@ package com.jackie.classbook.entity;
 public class Class {
     private Long id;            //班级id
     private Long schoolId;      //学校id
+    private Integer year;       //届
     private String className;   //班级名
     private Byte validFlag;     //标志位
 
@@ -27,6 +28,14 @@ public class Class {
 
     public void setSchoolId(Long schoolId) {
         this.schoolId = schoolId;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     public String getClassName() {

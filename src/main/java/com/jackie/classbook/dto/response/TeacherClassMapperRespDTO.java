@@ -12,6 +12,7 @@ import com.jackie.classbook.dto.BaseRespDTO;
 public class TeacherClassMapperRespDTO extends BaseRespDTO {
     private Long id;                //id
     private Long classId;           //班级id
+    private Integer year;           //届
     private String className;       //班级名
     private Long teacherId;         //老师id
     private String teacherName;     //老师姓名
@@ -33,6 +34,14 @@ public class TeacherClassMapperRespDTO extends BaseRespDTO {
 
     public void setClassId(Long classId) {
         this.classId = classId;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     public String getClassName() {
