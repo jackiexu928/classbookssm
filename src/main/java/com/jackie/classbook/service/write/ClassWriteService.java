@@ -1,9 +1,6 @@
 package com.jackie.classbook.service.write;
 
-import com.jackie.classbook.dto.request.ClassAddReqDTO;
-import com.jackie.classbook.dto.request.ClassRemoveTeacherReqDTO;
-import com.jackie.classbook.dto.request.ClassSetTeacherReqDTO;
-import com.jackie.classbook.dto.request.ClassUpdateReqDTO;
+import com.jackie.classbook.dto.request.*;
 import com.jackie.classbook.process.Context;
 
 /**
@@ -21,4 +18,6 @@ public interface ClassWriteService {
     Context<ClassUpdateReqDTO, Void> updateClass(ClassUpdateReqDTO reqDTO);
 
     Context<ClassRemoveTeacherReqDTO, Void> removeTeacher(ClassRemoveTeacherReqDTO reqDTO);
+
+    Context<ClassAddMateReqDTO, Void> addMate(ClassAddMateReqDTO reqDTO);
 }

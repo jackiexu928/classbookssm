@@ -94,4 +94,16 @@ public class ClassController extends BaseController {
     public String update(ClassUpdateReqDTO reqDTO){
         return toJSON(classWriteService.updateClass(reqDTO));
     }
+
+    /**
+     * 添加同学
+     * @param reqDTO
+     * @return
+     */
+    @RequestMapping(value = "/addMate",
+                    method = RequestMethod.POST,
+                    produces = {"application/json;charset=UTF-8"})
+    public String addMate(ClassAddMateReqDTO reqDTO){
+        return toJSON(classWriteService.addMate(reqDTO));
+    }
 }

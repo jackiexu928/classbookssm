@@ -128,4 +128,9 @@
         select * from mate
         where email = #{email} and valid_flag = 1
     </select>
+
+    <select id="queryById" resultType="Mate" parameterType="long">
+        select * from mate
+        where id = #{id} and valid_flag = 1
+    </select>
 </mapper>

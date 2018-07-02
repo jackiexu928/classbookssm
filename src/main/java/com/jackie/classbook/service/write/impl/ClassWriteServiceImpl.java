@@ -3,16 +3,10 @@ package com.jackie.classbook.service.write.impl;
 import com.alibaba.fastjson.JSON;
 import com.jackie.classbook.common.ClassbookCodeEnum;
 import com.jackie.classbook.common.ClassbookException;
-import com.jackie.classbook.dao.ClassDao;
-import com.jackie.classbook.dao.TeacherClassMapperDao;
-import com.jackie.classbook.dao.TeacherDao;
-import com.jackie.classbook.dto.request.ClassAddReqDTO;
-import com.jackie.classbook.dto.request.ClassRemoveTeacherReqDTO;
-import com.jackie.classbook.dto.request.ClassSetTeacherReqDTO;
-import com.jackie.classbook.dto.request.ClassUpdateReqDTO;
+import com.jackie.classbook.dao.*;
+import com.jackie.classbook.dto.request.*;
+import com.jackie.classbook.entity.*;
 import com.jackie.classbook.entity.Class;
-import com.jackie.classbook.entity.Teacher;
-import com.jackie.classbook.entity.TeacherClassMapper;
 import com.jackie.classbook.process.AbstractService;
 import com.jackie.classbook.process.Context;
 import com.jackie.classbook.service.write.ClassWriteService;
@@ -36,6 +30,12 @@ public class ClassWriteServiceImpl extends AbstractService implements ClassWrite
     private TeacherClassMapperDao teacherClassMapperDao;
     @Autowired
     private TeacherDao teacherDao;
+    @Autowired
+    private MateDao mateDao;
+    @Autowired
+    private SchoolDao schoolDao;
+    @Autowired
+    private MateClassMapperDao mateClassMapperDao;
 
     @Override
     public Context<ClassAddReqDTO, Void> insert(ClassAddReqDTO reqDTO) {
@@ -76,6 +76,27 @@ public class ClassWriteServiceImpl extends AbstractService implements ClassWrite
     public Context<ClassRemoveTeacherReqDTO, Void> removeTeacher(ClassRemoveTeacherReqDTO reqDTO) {
         teacherClassMapperDao.delete(reqDTO.getClassId(), reqDTO.getTeacherId());
         Context<ClassRemoveTeacherReqDTO, Void> context = new Context<>();
+        return context;
+    }
+
+    @Override
+    public Context<ClassAddMateReqDTO, Void> addMate(ClassAddMateReqDTO reqDTO) {
+        Mate mate = mateDao.queryById(reqDTO.getMateId());
+        School school = schoolDao.querySchoolById(reqDTO.getSchoolId());
+        Class clazz = classDao.queryById(reqDTO.getClassId());
+
+        MateClassMapper mateClassMapper = new MateClassMapper();
+        mateClassMapper.setAccountId(mate.getAccountId());
+        mateClassMapper.setSchoolId(school.getId());
+        mateClassMapper.setSchoolName(school.getSchoolName());
+        mateClassMapper.setClassId(clazz.getId());
+        mateClassMapper.setClassName(clazz.getClassName());
+        mateClassMapper.setMateId(mate.getId());
+        mateClassMapper.setMateName(mate.getName());
+        mateClassMapper.setMateType(reqDTO.getMateType());
+        mateClassMapper.setValidFlag((byte)1);
+        mateClassMapperDao.insert(mateClassMapper);
+        Context<ClassAddMateReqDTO, Void> context = new Context<>();
         return context;
     }
 }
