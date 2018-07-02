@@ -18,6 +18,7 @@ public class ClassDetailRespDTO extends BaseRespDTO {
     private Integer year;       //届
     private String className;   //班级名
     private List<TeacherClassMapperRespDTO> teachersList;   //老师list
+    private List<MateClassMapperRespDTO> matesList;         //同学list
 
     public Long getClassId() {
         return classId;
@@ -65,5 +66,13 @@ public class ClassDetailRespDTO extends BaseRespDTO {
 
     public void setTeachersList(List<TeacherClassMapperRespDTO> teachersList) {
         this.teachersList = teachersList;
+    }
+
+    public List<MateClassMapperRespDTO> getMatesList() {
+        return matesList;
+    }
+
+    public void setMatesList(List<MateClassMapperRespDTO> matesList) {
+        this.matesList = matesList;
     }
 }

@@ -59,6 +59,7 @@ public class MateWriteServiceImpl extends AbstractService implements MateWriteSe
         }
 
         Mate mate = new Mate();
+        //TODO 获取登录用户的id
         mate.setAccountId(7L);
         mate.setName(reqDTO.getName());
         mate.setMobile(reqDTO.getMobile());

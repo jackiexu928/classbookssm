@@ -3,6 +3,18 @@
         PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jackie.classbook.dao.MateClassMapperDao">
+    <resultMap id="mateClassMapperList" type="MateClassMapper">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="account_id" jdbcType="BIGINT" property="accountId"/>
+        <result column="school_id" jdbcType="BIGINT" property="schoolId"/>
+        <result column="school_name" jdbcType="VARCHAR" property="schoolName"/>
+        <result column="class_id" jdbcType="BIGINT" property="classId"/>
+        <result column="class_name" jdbcType="VARCHAR" property="className"/>
+        <result column="mate_id" jdbcType="BIGINT" property="mateId"/>
+        <result column="mate_name" jdbcType="VARCHAR" property="mateName"/>
+        <result column="mate_type" jdbcType="INTEGER" property="mateType"/>
+        <result column="valid_flag" jdbcType="TINYINT" property="validFlag"/>
+    </resultMap>
 
     <insert id="insert" parameterType="com.jackie.classbook.entity.MateClassMapper">
         insert into mate_class_mapper
@@ -95,4 +107,17 @@
             </if>
         </where>
     </update>
+
+    <select id="queryList" resultMap="mateClassMapperList" parameterType="com.jackie.classbook.entity.MateClassMapper">
+        select * from mate_class_mapper
+        <where>
+            valid_flag = 1 and account_id = #{accountId,jdbcType=BIGINT}
+            <if test="classId != null">
+                and class_id = #{classId,jdbcType=BIGINT}
+            </if>
+            <if test="mateId != null">
+                and teacher_id = #{teacherId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
 </mapper>

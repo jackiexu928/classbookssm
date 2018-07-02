@@ -2,6 +2,8 @@ package com.jackie.classbook.dao;
 
 import com.jackie.classbook.entity.MateClassMapper;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -13,4 +15,6 @@ public interface MateClassMapperDao {
     int insert(MateClassMapper mateClassMapper);
 
     int update(MateClassMapper mateClassMapper);
+
+    List<MateClassMapper> queryList(MateClassMapper mateClassMapper);
 }

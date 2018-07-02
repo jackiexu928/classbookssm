@@ -16,7 +16,7 @@ public class TeacherClassMapperRespDTO extends BaseRespDTO {
     private String className;       //班级名
     private Long teacherId;         //老师id
     private String teacherName;     //老师姓名
-    private String teacherType;     //老师类型 1-班主任，2-任课老师'
+    private String teacherType;     //老师类型 1-班主任，2-任课老师
     private String subjects;        //所教科目
     private Byte validFlag;         //标志位
 

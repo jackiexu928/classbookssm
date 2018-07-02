@@ -68,6 +68,7 @@ public class TeacherClassMapperFactory {
         teacherClassMapperRespDTO.setClassId(teacherClassMapper.getClassId());
         teacherClassMapperRespDTO.setYear(teacherClassMapper.getYear());
         teacherClassMapperRespDTO.setClassName(teacherClassMapper.getClassName());
+        teacherClassMapperRespDTO.setTeacherType(TeacherTypeEnum.getValue(teacherClassMapper.getTeacherType()));
         return teacherClassMapperRespDTO;
     }
 

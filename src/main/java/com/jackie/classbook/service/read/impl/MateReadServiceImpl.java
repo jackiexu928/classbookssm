@@ -33,6 +33,7 @@ public class MateReadServiceImpl extends AbstractQueryService implements MateRea
     @Override
     public Context<MateQueryReqDTO, List<MateRespDTO>> getList(MateQueryReqDTO reqDTO) {
         Map filters = new HashMap();
+        //TODO 获取登录用户的id
         filters.put("accountId", 7L);
         filters.put("keyword", reqDTO.getKeyword());
         filters.put("sex", reqDTO.getSex());
