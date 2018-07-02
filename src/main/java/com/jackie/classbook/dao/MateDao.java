@@ -19,4 +19,6 @@ public interface MateDao {
     Mate queryMateByEmail(String email);
 
     Mate queryById(Long id);
+
+    int update(Mate mate);
 }

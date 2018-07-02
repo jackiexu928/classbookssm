@@ -11,4 +11,6 @@ import com.jackie.classbook.entity.MateClassMapper;
  */
 public interface MateClassMapperDao {
     int insert(MateClassMapper mateClassMapper);
+
+    int update(MateClassMapper mateClassMapper);
 }

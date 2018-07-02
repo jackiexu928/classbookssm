@@ -136,14 +136,23 @@ public class AccountWriteServiceImpl extends AbstractService implements AccountW
     }
 
     public String getAddress(Long codeId){
+        if (codeId == null){
+            return null;
+        }
         return addressDao.queryAddressByCodeId(codeId).getName();
     }
 
     public String getNation(Long nationId){
+        if (nationId == null){
+            return null;
+        }
         return nationDao.queryNationById(nationId).getNation();
     }
 
     public String getSchool(Long schoolId){
+        if (schoolId == null){
+            return null;
+        }
         return schoolDao.querySchoolById(schoolId).getSchoolName();
     }
 }

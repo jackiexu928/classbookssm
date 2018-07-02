@@ -1,6 +1,7 @@
 package com.jackie.classbook.service.write;
 
 import com.jackie.classbook.dto.request.MateAddReqDTO;
+import com.jackie.classbook.dto.request.MateUpdateReqDTO;
 import com.jackie.classbook.process.Context;
 
 /**
@@ -12,4 +13,6 @@ import com.jackie.classbook.process.Context;
  */
 public interface MateWriteService {
     Context<MateAddReqDTO, Void> addMate(MateAddReqDTO reqDTO);
+
+    Context<MateUpdateReqDTO, Void> updateMate(MateUpdateReqDTO reqDTO);
 }

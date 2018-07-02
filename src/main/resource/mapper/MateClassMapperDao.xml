@@ -71,4 +71,28 @@
             </if>
         </trim>
     </insert>
+
+    <update id="update" parameterType="com.jackie.classbook.entity.MateClassMapper">
+        update mate_class_mapper
+        <set>
+            <if test="className != null">
+                class_name = #{className,jdbcType=VARCHAR},
+            </if>
+            <if test="mateName != null">
+                mate_name = #{mateName,jdbcType=VARCHAR},
+            </if>
+            <if test="mateType != null">
+                mate_type = #{mateType,jdbcType=INTEGER},
+            </if>
+        </set>
+        <where>
+            valid_flag = 1
+            <if test="classId != null">
+                and class_id = #{classId,jdbcType=BIGINT}
+            </if>
+            <if test="mateId != null">
+                and mate_id = #{mateId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </update>
 </mapper>

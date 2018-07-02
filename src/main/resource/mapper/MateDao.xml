@@ -133,4 +133,53 @@
         select * from mate
         where id = #{id} and valid_flag = 1
     </select>
+
+    <update id="update" parameterType="com.jackie.classbook.entity.Mate">
+        update mate
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=BIGINT},
+            </if>
+            <if test="qq != null">
+                qq = #{qq,jdbcType=BIGINT},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="nation != null">
+                nation = #{nation,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                country = #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="town != null">
+                town = #{town,jdbcType=VARCHAR},
+            </if>
+            <if test="village != null">
+                village = #{village,jdbcType=VARCHAR},
+            </if>
+            <if test="liveCity != null">
+                live_city = #{liveCity,jdbcType=VARCHAR},
+            </if>
+            <if test="impression != null">
+                impression = #{impression,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>
