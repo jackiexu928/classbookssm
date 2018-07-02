@@ -1,7 +1,9 @@
 package com.jackie.classbook.controller;
 
 import com.jackie.classbook.dto.request.MateAddReqDTO;
+import com.jackie.classbook.dto.request.MateQueryReqDTO;
 import com.jackie.classbook.dto.request.MateUpdateReqDTO;
+import com.jackie.classbook.service.read.MateReadService;
 import com.jackie.classbook.service.write.MateWriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,8 @@ public class MateController extends BaseController {
 
     @Autowired
     private MateWriteService mateWriteService;
+    @Autowired
+    private MateReadService mateReadService;
 
     /**
      * 添加同学
@@ -44,5 +48,17 @@ public class MateController extends BaseController {
                     produces = {"application/json;charset=UTF-8"})
     public String updateMate(MateUpdateReqDTO reqDTO){
         return toJSON(mateWriteService.updateMate(reqDTO));
+    }
+
+    /**
+     * 根据条件查询同学列表
+     * @param reqDTO
+     * @return
+     */
+    @RequestMapping(value = "/list",
+                    method = RequestMethod.GET,
+                    produces = {"application/json;charset=UTF-8"})
+    public String getList(MateQueryReqDTO reqDTO){
+        return toJSON(mateReadService.getList(reqDTO));
     }
 }

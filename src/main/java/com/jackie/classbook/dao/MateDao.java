@@ -1,6 +1,10 @@
 package com.jackie.classbook.dao;
 
+import com.jackie.classbook.dto.request.MateQueryReqDTO;
 import com.jackie.classbook.entity.Mate;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,4 +25,6 @@ public interface MateDao {
     Mate queryById(Long id);
 
     int update(Mate mate);
+
+    List<Mate> queryMates(Map map);
 }

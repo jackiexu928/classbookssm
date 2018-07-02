@@ -35,9 +35,9 @@ public class SchoolReadServiceImpl extends AbstractQueryService implements Schoo
         School school = new School();
         school.setSchoolName(reqDTO.getSchoolName());
         school.setType(reqDTO.getType());
-        school.setProvince(reqDTO.getProvinceCode() == null ? null : getAddress(reqDTO.getProvinceCode()));
-        school.setCity(reqDTO.getCityCode() == null ? null :  getAddress(reqDTO.getCityCode()));
-        school.setCountry(reqDTO.getCountryCode() == null ? null : getAddress(reqDTO.getCountryCode()));
+        school.setProvince(getAddress(reqDTO.getProvinceCode()));
+        school.setCity(getAddress(reqDTO.getCityCode()));
+        school.setCountry(getAddress(reqDTO.getCountryCode()));
         List<School> list = schoolDao.querySchools(school);
         List<SchoolRespDTO> resultList = SchoolFactory.convertToDTO(list);
         Context<SchoolQueryReqDTO, List<SchoolRespDTO>> context = new Context<>();
@@ -46,6 +46,9 @@ public class SchoolReadServiceImpl extends AbstractQueryService implements Schoo
     }
 
     public String getAddress(Long codeId){
+        if (codeId == null){
+            return null;
+        }
         return addressDao.queryAddressByCodeId(codeId).getName();
     }
 }
