@@ -14,6 +14,8 @@ import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -97,6 +99,21 @@ public class ClassWriteServiceImpl extends AbstractService implements ClassWrite
         mateClassMapper.setValidFlag((byte)1);
         mateClassMapperDao.insert(mateClassMapper);
         Context<ClassAddMateReqDTO, Void> context = new Context<>();
+        return context;
+    }
+
+    @Override
+    public Context<ClassRemoveMateReqDTO, Void> removeMate(ClassRemoveMateReqDTO reqDTO) {
+        List<String> list = Arrays.asList(reqDTO.getMateIds().split(","));
+        List<Long> idList = new ArrayList<>();
+        for (String string : list){
+            idList.add(Long.valueOf(string));
+        }
+        Map filters = new HashMap();
+        filters.put("classId", reqDTO.getClassId());
+        filters.put("mateIdList", idList);
+        mateClassMapperDao.deleteByIdList(filters);
+        Context<ClassRemoveMateReqDTO, Void> context = new Context<>();
         return context;
     }
 }

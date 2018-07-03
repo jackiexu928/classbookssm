@@ -20,4 +20,6 @@ public interface ClassWriteService {
     Context<ClassRemoveTeacherReqDTO, Void> removeTeacher(ClassRemoveTeacherReqDTO reqDTO);
 
     Context<ClassAddMateReqDTO, Void> addMate(ClassAddMateReqDTO reqDTO);
+
+    Context<ClassRemoveMateReqDTO, Void> removeMate(ClassRemoveMateReqDTO reqDTO);
 }

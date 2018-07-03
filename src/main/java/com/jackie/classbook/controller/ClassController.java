@@ -106,4 +106,16 @@ public class ClassController extends BaseController {
     public String addMate(ClassAddMateReqDTO reqDTO){
         return toJSON(classWriteService.addMate(reqDTO));
     }
+
+    /**
+     * 批量移除同学
+     * @param reqDTO
+     * @return
+     */
+    @RequestMapping(value = "/removeMate",
+                    method = RequestMethod.POST,
+                    produces = {"application/json;charset=UTF-8"})
+    public String removeMate(ClassRemoveMateReqDTO reqDTO){
+        return toJSON(classWriteService.removeMate(reqDTO));
+    }
 }
