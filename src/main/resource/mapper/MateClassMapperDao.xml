@@ -116,7 +116,7 @@
                 and class_id = #{classId,jdbcType=BIGINT}
             </if>
             <if test="mateId != null">
-                and teacher_id = #{teacherId,jdbcType=BIGINT}
+                and mate_id = #{mateId,jdbcType=BIGINT}
             </if>
         </where>
     </select>

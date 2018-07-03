@@ -1,6 +1,8 @@
 package com.jackie.classbook.service.read;
 
+import com.jackie.classbook.dto.request.BaseIdReqDTO;
 import com.jackie.classbook.dto.request.MateQueryReqDTO;
+import com.jackie.classbook.dto.response.MateDetailRespDTO;
 import com.jackie.classbook.dto.response.MateRespDTO;
 import com.jackie.classbook.process.Context;
 
@@ -15,4 +17,6 @@ import java.util.List;
  */
 public interface MateReadService {
     Context<MateQueryReqDTO, List<MateRespDTO>> getList(MateQueryReqDTO reqDTO);
+
+    Context<BaseIdReqDTO, MateDetailRespDTO> getDetail(BaseIdReqDTO reqDTO);
 }

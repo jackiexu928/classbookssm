@@ -1,10 +1,17 @@
 package com.jackie.classbook.service.read.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.jackie.classbook.dao.AddressDao;
+import com.jackie.classbook.dao.MateClassMapperDao;
 import com.jackie.classbook.dao.MateDao;
+import com.jackie.classbook.dto.request.BaseIdReqDTO;
 import com.jackie.classbook.dto.request.MateQueryReqDTO;
+import com.jackie.classbook.dto.response.MateClassMapperRespDTO;
+import com.jackie.classbook.dto.response.MateDetailRespDTO;
 import com.jackie.classbook.dto.response.MateRespDTO;
 import com.jackie.classbook.entity.Mate;
+import com.jackie.classbook.entity.MateClassMapper;
+import com.jackie.classbook.entity.module.MateClassMapperFactory;
 import com.jackie.classbook.entity.module.MateFactory;
 import com.jackie.classbook.process.AbstractQueryService;
 import com.jackie.classbook.process.Context;
@@ -29,6 +36,8 @@ public class MateReadServiceImpl extends AbstractQueryService implements MateRea
     private MateDao mateDao;
     @Autowired
     private AddressDao addressDao;
+    @Autowired
+    private MateClassMapperDao mateClassMapperDao;
 
     @Override
     public Context<MateQueryReqDTO, List<MateRespDTO>> getList(MateQueryReqDTO reqDTO) {
@@ -47,6 +56,22 @@ public class MateReadServiceImpl extends AbstractQueryService implements MateRea
         context.setResult(resultList);
         return context;
     }
+
+    @Override
+    public Context<BaseIdReqDTO, MateDetailRespDTO> getDetail(BaseIdReqDTO reqDTO) {
+        Mate mate = mateDao.queryById(reqDTO.getId());
+        MateClassMapper mateClassMapper = new MateClassMapper();
+        mateClassMapper.setAccountId(mate.getAccountId());
+        mateClassMapper.setMateId(reqDTO.getId());
+        List<MateClassMapper> list = mateClassMapperDao.queryList(mateClassMapper);
+        List<MateClassMapperRespDTO> respList = MateClassMapperFactory.getClasses(list);
+        MateDetailRespDTO mateDetailRespDTO = JSON.parseObject(JSON.toJSONString(mate), MateDetailRespDTO.class);
+        mateDetailRespDTO.setClassList(respList);
+        Context<BaseIdReqDTO, MateDetailRespDTO> context = new Context<>();
+        context.setResult(mateDetailRespDTO);
+        return context;
+    }
+
     public String getAddress(Long codeId){
         if (codeId == null){
             return null;

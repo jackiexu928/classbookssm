@@ -1,5 +1,6 @@
 package com.jackie.classbook.controller;
 
+import com.jackie.classbook.dto.request.BaseIdReqDTO;
 import com.jackie.classbook.dto.request.MateAddReqDTO;
 import com.jackie.classbook.dto.request.MateQueryReqDTO;
 import com.jackie.classbook.dto.request.MateUpdateReqDTO;
@@ -60,5 +61,17 @@ public class MateController extends BaseController {
                     produces = {"application/json;charset=UTF-8"})
     public String getList(MateQueryReqDTO reqDTO){
         return toJSON(mateReadService.getList(reqDTO));
+    }
+
+    /**
+     * 查看同学详情
+     * @param reqDTO
+     * @return
+     */
+    @RequestMapping(value = "/detail",
+                    method = RequestMethod.GET,
+                    produces = {"application/json;charset=UTF-8"})
+    public String getMateDetail(BaseIdReqDTO reqDTO){
+        return toJSON(mateReadService.getDetail(reqDTO));
     }
 }
