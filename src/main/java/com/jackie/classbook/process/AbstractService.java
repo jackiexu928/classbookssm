@@ -3,12 +3,14 @@ package com.jackie.classbook.process;
 import com.alibaba.fastjson.JSON;
 import com.jackie.classbook.dto.BaseReqDTO;
 import com.jackie.classbook.util.TrackHolder;
+import org.springframework.transaction.annotation.Transactional;
 //import org.apache.log4j.Logger;
 
 /**
  * Created by Administrator on 2018/3/12 0012.
  * 更新类操作抽象类
  */
+@Transactional//事务回滚
 public abstract class AbstractService<P extends BaseReqDTO,M> implements CommonInterface<P, M> {
     //protected final static Logger logger = Logger.getLogger("classbookLog");
 
