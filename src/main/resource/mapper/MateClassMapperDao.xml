@@ -120,4 +120,21 @@
             </if>
         </where>
     </select>
+
+    <update id="deleteByIdList" parameterType="HashMap">
+        update mate_class_mapper
+        set valid_flag = 0
+        <where>
+            <if test="classId != null">
+                and class_id = #{classId,jdbcType=BIGINT}
+            </if>
+            <if test="mateIdList != null">
+                and mate_id in
+                <foreach item="item" index="index" collection="mateIdList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+
+    </update>
 </mapper>

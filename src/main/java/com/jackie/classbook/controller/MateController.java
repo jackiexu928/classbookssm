@@ -1,15 +1,14 @@
 package com.jackie.classbook.controller;
 
-import com.jackie.classbook.dto.request.BaseIdReqDTO;
-import com.jackie.classbook.dto.request.MateAddReqDTO;
-import com.jackie.classbook.dto.request.MateQueryReqDTO;
-import com.jackie.classbook.dto.request.MateUpdateReqDTO;
+import com.jackie.classbook.dto.request.*;
 import com.jackie.classbook.service.read.MateReadService;
 import com.jackie.classbook.service.write.MateWriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -73,5 +72,17 @@ public class MateController extends BaseController {
                     produces = {"application/json;charset=UTF-8"})
     public String getMateDetail(BaseIdReqDTO reqDTO){
         return toJSON(mateReadService.getDetail(reqDTO));
+    }
+
+    /**
+     * 批量删除同学
+     * @param reqDTO
+     * @return
+     */
+    @RequestMapping(value = "/delete",
+                    method = RequestMethod.POST,
+                    produces = {"application/json;charset=UTF-8"})
+    public String deteleMate(MateDeleteReqDTO reqDTO){
+        return toJSON(mateWriteService.deleteMate(reqDTO));
     }
 }

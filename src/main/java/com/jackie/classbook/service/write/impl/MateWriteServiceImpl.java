@@ -6,7 +6,9 @@ import com.jackie.classbook.dao.AddressDao;
 import com.jackie.classbook.dao.MateClassMapperDao;
 import com.jackie.classbook.dao.MateDao;
 import com.jackie.classbook.dao.NationDao;
+import com.jackie.classbook.dto.request.BaseIdReqDTO;
 import com.jackie.classbook.dto.request.MateAddReqDTO;
+import com.jackie.classbook.dto.request.MateDeleteReqDTO;
 import com.jackie.classbook.dto.request.MateUpdateReqDTO;
 import com.jackie.classbook.entity.Mate;
 import com.jackie.classbook.entity.MateClassMapper;
@@ -16,6 +18,8 @@ import com.jackie.classbook.service.write.MateWriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -127,6 +131,22 @@ public class MateWriteServiceImpl extends AbstractService implements MateWriteSe
         mateClassMapperDao.update(mateClassMapper);
 
         Context<MateUpdateReqDTO, Void> context = new Context<>();
+        return context;
+    }
+
+    @Override
+    public Context<MateDeleteReqDTO, Void> deleteMate(MateDeleteReqDTO reqDTO) {
+        Context<MateDeleteReqDTO, Void> context = new Context<>();
+        List<String> list = Arrays.asList(reqDTO.getIds().split(","));
+        List<Long> idList = new ArrayList<>();
+        for (String string : list){
+            idList.add(Long.valueOf(string));
+        }
+        mateDao.deleteByIdList(idList);
+        //删除班级同学映射表
+        Map filters = new HashMap();
+        filters.put("mateIdList", idList);
+        mateClassMapperDao.deleteByIdList(filters);
         return context;
     }
 
