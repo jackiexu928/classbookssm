@@ -10,6 +10,7 @@ import com.jackie.classbook.dao.NationDao;
 import com.jackie.classbook.dao.SchoolDao;
 import com.jackie.classbook.dto.request.AccountRegisterReqDTO;
 import com.jackie.classbook.dto.request.AccountUpdateReqDTO;
+import com.jackie.classbook.dto.request.BaseIdReqDTO;
 import com.jackie.classbook.dto.request.LoginReqDTO;
 import com.jackie.classbook.dto.response.AccountLoginRespDTO;
 import com.jackie.classbook.dto.response.AccountRespDTO;
@@ -154,5 +155,26 @@ public class AccountWriteServiceImpl extends AbstractService implements AccountW
             return null;
         }
         return schoolDao.querySchoolById(schoolId).getSchoolName();
+    }
+
+    @Override
+    public Context<BaseIdReqDTO, Void> adminResetPassword(BaseIdReqDTO reqDTO) {
+        Context<BaseIdReqDTO, Void> context = new Context<>();
+        Account query = new Account();
+        query.setId(reqDTO.getId());
+        Account account = accountDao.findAccount(query);
+        //TODO 权限控制
+        if (account == null){
+            throw new ClassbookException(ClassbookCodeEnum.ACCOUNT_NOT_EXIST);
+        }
+        String password = null;
+        try {
+            password = SignUtil.md5Encrypt("123456");
+        }catch (Exception e){}
+        account.setPassword(password);
+        account.setUpdateTime(new Date());
+        accountDao.resetPassword(account);
+        //TODO 重置完成短信、邮件通知
+        return context;
     }
 }

@@ -2,6 +2,7 @@ package com.jackie.classbook.service.write;
 
 import com.jackie.classbook.dto.request.AccountRegisterReqDTO;
 import com.jackie.classbook.dto.request.AccountUpdateReqDTO;
+import com.jackie.classbook.dto.request.BaseIdReqDTO;
 import com.jackie.classbook.dto.request.LoginReqDTO;
 import com.jackie.classbook.dto.response.AccountLoginRespDTO;
 import com.jackie.classbook.entity.Account;
@@ -20,4 +21,6 @@ public interface AccountWriteService {
     Context<AccountRegisterReqDTO, Void> insert(AccountRegisterReqDTO reqDTO);
 
     Context<AccountUpdateReqDTO, Void> update(AccountUpdateReqDTO reqDTO);
+
+    Context<BaseIdReqDTO, Void> adminResetPassword(BaseIdReqDTO reqDTO);
 }

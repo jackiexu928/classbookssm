@@ -70,15 +70,15 @@ public class AccountController extends BaseController{
     }
 
     /**
-     * 重置密码
+     * 管理员重置用户密码
      * @param reqDTO
      * @return
      */
-    @RequestMapping(value = "/resetPassword",
+    @RequestMapping(value = "/adminResetPassword",
                     method = RequestMethod.POST,
                     produces = {"application/json;charset=UTF-8"})
-    public String resetPassword(AccountResetPasswordReqDTO reqDTO){
-        return null;
+    public String resetPassword(BaseIdReqDTO reqDTO){
+        return toJSON(accountWriteService.adminResetPassword(reqDTO));
     }
 
     /**

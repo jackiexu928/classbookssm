@@ -315,4 +315,17 @@
         </set>
         where id = #{id}
     </update>
+
+    <update id="resetPassword" parameterType="com.jackie.classbook.entity.Account">
+        update account
+        <set>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

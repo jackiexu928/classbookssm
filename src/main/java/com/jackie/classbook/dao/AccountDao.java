@@ -22,4 +22,6 @@ public interface AccountDao {
     Account queryAccountByEmail(String email);
 
     void update(Account account);
+
+    void resetPassword(Account account);
 }
