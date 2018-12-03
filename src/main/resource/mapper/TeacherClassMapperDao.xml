@@ -125,4 +125,17 @@
         set valid_flag = 0
         where class_id = #{classId,jdbcType=BIGINT} and teacher_id = #{teacherId,jdbcType=BIGINT}
     </update>
+
+    <select id="queryListByClassIdAndType" resultMap="teacherClassMapperList" parameterType="com.jackie.classbook.entity.TeacherClassMapper">
+        select * from teacher_class_mapper
+        <where>
+            valid_flag = 1
+            <if test="classId != null">
+                and class_id = #{classId,jdbcType=BIGINT}
+            </if>
+            <if test="teacherType != null">
+                and teacher_type = #{teacherType,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
 </mapper>

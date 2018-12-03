@@ -2,11 +2,14 @@ package com.jackie.classbook.entity.module;
 
 import com.alibaba.fastjson.JSON;
 import com.jackie.classbook.common.MateTypeEnum;
+import com.jackie.classbook.dto.response.ClassExportRespDTO;
 import com.jackie.classbook.dto.response.MateClassMapperRespDTO;
 import com.jackie.classbook.entity.MateClassMapper;
+import com.jackie.classbook.entity.TeacherClassMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -78,6 +81,26 @@ public class MateClassMapperFactory {
         List<MateClassMapperRespDTO> resultList = new ArrayList<>();
         for (MateClassMapper mateClassMapper : list){
             resultList.add(getClasses(mateClassMapper));
+        }
+        return resultList;
+    }
+
+    public static List<ClassExportRespDTO> getClassExportRespDTO(List<MateClassMapper> list, Map<String, String> map){
+        List<ClassExportRespDTO> resultList = new ArrayList<>();
+        int serialNum = 1;
+        for (MateClassMapper mateClassMapper : list){
+            ClassExportRespDTO classExportRespDTO = new ClassExportRespDTO();
+            classExportRespDTO.setSerialNum(serialNum);
+            classExportRespDTO.setSchoolName(mateClassMapper.getSchoolName());
+            classExportRespDTO.setYear(Integer.parseInt(map.get(mateClassMapper.getClassId() + "")));
+            classExportRespDTO.setClassName(mateClassMapper.getClassName());
+            if (map.containsKey(mateClassMapper.getClassId() + "-classTeacher")){
+                classExportRespDTO.setClassTeacher(map.get(mateClassMapper.getClassId() + "-classTeacher"));
+            }
+            if (map.containsKey(mateClassMapper.getClassId() + "-subjectTeacher")){
+                classExportRespDTO.setSubjectTeacher(map.get(mateClassMapper.getClassId() + "-subjectTeacher"));
+            }
+            resultList.add(classExportRespDTO);
         }
         return resultList;
     }

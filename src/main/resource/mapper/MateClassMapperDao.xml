@@ -136,4 +136,10 @@
             </if>
         </where>
     </update>
+
+    <select id="queryClassListByAccountId" resultMap="mateClassMapperList" parameterType="com.jackie.classbook.entity.MateClassMapper">
+        select * from mate_class_mapper
+        where valid_flag = 1 and account_id = #{accountId,jdbcType=BIGINT}
+        GROUP BY class_id
+    </select>
 </mapper>
