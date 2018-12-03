@@ -90,7 +90,6 @@ public class MateClassMapperFactory {
         int serialNum = 1;
         for (MateClassMapper mateClassMapper : list){
             ClassExportRespDTO classExportRespDTO = new ClassExportRespDTO();
-            classExportRespDTO.setSerialNum(serialNum);
             classExportRespDTO.setSchoolName(mateClassMapper.getSchoolName());
             classExportRespDTO.setYear(Integer.parseInt(map.get(mateClassMapper.getClassId() + "")));
             classExportRespDTO.setClassName(mateClassMapper.getClassName());
@@ -100,7 +99,22 @@ public class MateClassMapperFactory {
             if (map.containsKey(mateClassMapper.getClassId() + "-subjectTeacher")){
                 classExportRespDTO.setSubjectTeacher(map.get(mateClassMapper.getClassId() + "-subjectTeacher"));
             }
-            resultList.add(classExportRespDTO);
+            //根据年份进行排序
+            if (resultList.size() > 0) {
+                for (int i = 0; i < resultList.size(); i ++){
+                    if (classExportRespDTO.getYear() >= resultList.get(i - 1).getYear() &&
+                            classExportRespDTO.getYear() < resultList.get(i).getYear()){
+                        List<ClassExportRespDTO> respList = resultList.subList(i, resultList.size());
+                        resultList = resultList.subList(0, i);
+                        resultList.add(classExportRespDTO);
+                        resultList.addAll(respList);
+                    }
+                }
+            }
+        }
+        for (ClassExportRespDTO classExportRespDTO : resultList){
+            classExportRespDTO.setSerialNum(serialNum);
+            serialNum ++;
         }
         return resultList;
     }
