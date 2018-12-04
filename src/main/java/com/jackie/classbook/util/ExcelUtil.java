@@ -48,7 +48,7 @@ public class ExcelUtil {
 
         wcfN.setBackground(Colour.ORANGE);
         wcfN.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN,jxl.format.Colour.BLACK); //BorderLineStyle边框
-        wcfN.setAlignment(Alignment.CENTRE); //设置水平对齐
+        wcfN.setAlignment(Alignment.LEFT); //设置水平对齐
         wcfN.setWrap(false); //设置自动换行
         for(int i = 0; i < title.length; i ++){
             lab = new Label(i, 0, title[i], wcfN); //Label(col,row,str);

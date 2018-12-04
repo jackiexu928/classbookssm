@@ -17,4 +17,6 @@ public interface SchoolDao {
     int insert(School school);
 
     List<School> querySchools(School school);
+
+    List<School> querySchoolByIdList(List<Long> idList);
 }

@@ -1,6 +1,8 @@
 package com.jackie.classbook.entity.module;
 
 import com.alibaba.fastjson.JSON;
+import com.jackie.classbook.common.SchoolTypeEnum;
+import com.jackie.classbook.dto.response.SchoolExportRespDTO;
 import com.jackie.classbook.dto.response.SchoolRespDTO;
 import com.jackie.classbook.entity.School;
 
@@ -31,6 +33,24 @@ public class SchoolFactory {
         List<SchoolRespDTO> resultList = new ArrayList<>();
         for (School school : list){
             resultList.add(convertToDTO(school));
+        }
+        return resultList;
+    }
+
+    public static List<SchoolExportRespDTO> getSchoolExportRespDTO(List<School> list){
+        List<SchoolExportRespDTO> resultList = new ArrayList<>();
+        int serialNum = 1;
+        for (School school : list){
+            SchoolExportRespDTO schoolExportRespDTO = new SchoolExportRespDTO();
+            schoolExportRespDTO.setSerialNum(serialNum);
+            schoolExportRespDTO.setSchoolName(school.getSchoolName());
+            schoolExportRespDTO.setType(SchoolTypeEnum.getValue(school.getType()));
+            schoolExportRespDTO.setProvince(school.getProvince());
+            schoolExportRespDTO.setCity(school.getCity());
+            schoolExportRespDTO.setCountry(school.getCountry());
+            schoolExportRespDTO.setSchoolMotto(school.getSchoolMotto());
+            resultList.add(schoolExportRespDTO);
+            serialNum ++;
         }
         return resultList;
     }

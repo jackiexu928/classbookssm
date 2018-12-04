@@ -24,4 +24,6 @@ public interface MateClassMapperDao {
     List<MateClassMapper> queryClassListByAccountId(MateClassMapper mateClassMapper);
 
     List<MateClassMapper> queryListByAccountIdAndSchoolIdClassId(MateClassMapper mateClassMapper);
+
+    List<MateClassMapper> querySchoolListByAccountId(MateClassMapper mateClassMapper);
 }

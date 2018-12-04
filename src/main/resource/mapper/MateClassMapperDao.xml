@@ -16,7 +16,7 @@
         <result column="valid_flag" jdbcType="TINYINT" property="validFlag"/>
     </resultMap>
 
-    <insert id="insert" parameterType="com.jackie.classbook.entity.MateClassMapper">
+    <insert id="insert" parameterType="MateClassMapper">
         insert into mate_class_mapper
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -84,7 +84,7 @@
         </trim>
     </insert>
 
-    <update id="update" parameterType="com.jackie.classbook.entity.MateClassMapper">
+    <update id="update" parameterType="MateClassMapper">
         update mate_class_mapper
         <set>
             <if test="className != null">
@@ -108,7 +108,7 @@
         </where>
     </update>
 
-    <select id="queryList" resultMap="mateClassMapperList" parameterType="com.jackie.classbook.entity.MateClassMapper">
+    <select id="queryList" resultMap="mateClassMapperList" parameterType="MateClassMapper">
         select * from mate_class_mapper
         <where>
             valid_flag = 1 and account_id = #{accountId,jdbcType=BIGINT}
@@ -137,7 +137,7 @@
         </where>
     </update>
 
-    <select id="queryClassListByAccountId" resultMap="mateClassMapperList" parameterType="com.jackie.classbook.entity.MateClassMapper">
+    <select id="queryClassListByAccountId" resultMap="mateClassMapperList" parameterType="MateClassMapper">
         select * from mate_class_mapper
         where valid_flag = 1 and account_id = #{accountId,jdbcType=BIGINT}
         GROUP BY class_id
@@ -155,5 +155,11 @@
             </if>
         </where>
         order by school_id, class_id
+    </select>
+
+    <select id="querySchoolListByAccountId" resultMap="mateClassMapperList" parameterType="MateClassMapper">
+        select * from mate_class_mapper
+        where valid_flag = 1 and account_id = #{accountId,jdbcType=BIGINT}
+        GROUP BY school_id
     </select>
 </mapper>

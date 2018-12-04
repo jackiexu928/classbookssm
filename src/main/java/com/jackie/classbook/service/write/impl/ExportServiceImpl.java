@@ -10,10 +10,12 @@ import com.jackie.classbook.dto.request.MateExportReqDTO;
 import com.jackie.classbook.dto.response.ClassExportRespDTO;
 import com.jackie.classbook.dto.response.ExportRespDTO;
 import com.jackie.classbook.dto.response.MateExportRespDTO;
+import com.jackie.classbook.dto.response.SchoolExportRespDTO;
 import com.jackie.classbook.entity.*;
 import com.jackie.classbook.entity.Class;
 import com.jackie.classbook.entity.module.MateClassMapperFactory;
 import com.jackie.classbook.entity.module.MateFactory;
+import com.jackie.classbook.entity.module.SchoolFactory;
 import com.jackie.classbook.process.AbstractService;
 import com.jackie.classbook.process.Context;
 import com.jackie.classbook.service.write.ExportService;
@@ -136,6 +138,34 @@ public class ExportServiceImpl extends AbstractService implements ExportService 
                 "县/区","镇/街道","村","居住城市","印象"};
         ExportRespDTO exportRespDTO = new ExportRespDTO();
         exportRespDTO.setFileName(fileName + "同学信息");
+        exportRespDTO.setTitle(title);
+        exportRespDTO.setContent(ExportContentUtil.getContetn(exportList, title.length));
+        try {
+            ExcelUtil.export(exportRespDTO);
+        } catch (Exception e){
+            throw new ClassbookException("", e.getMessage());
+        }
+        return context;
+    }
+
+    @Override
+    public Context<BaseIdReqDTO, Void> exportSchool(BaseIdReqDTO reqDTO) {
+        MateClassMapper mateClassMapper = new MateClassMapper();
+        mateClassMapper.setAccountId(reqDTO.getId());
+        List<MateClassMapper> list = mateClassMapperDao.querySchoolListByAccountId(mateClassMapper);
+        if (list == null){
+            throw new ClassbookException(ClassbookCodeEnum.NO_RECORD);
+        }
+        List<Long> idList = new ArrayList<>();
+        for (MateClassMapper mate : list){
+            idList.add(mate.getSchoolId());
+        }
+        List<School> schoolList = schoolDao.querySchoolByIdList(idList);
+        List<SchoolExportRespDTO> exportList = SchoolFactory.getSchoolExportRespDTO(schoolList);
+        Context<BaseIdReqDTO, Void> context = new Context<>();
+        String[] title= {"序号","校名","类型","省","城市","县/区","校训"};
+        ExportRespDTO exportRespDTO = new ExportRespDTO();
+        exportRespDTO.setFileName("学校信息");
         exportRespDTO.setTitle(title);
         exportRespDTO.setContent(ExportContentUtil.getContetn(exportList, title.length));
         try {

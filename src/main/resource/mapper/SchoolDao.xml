@@ -95,4 +95,17 @@
             </if>
         </where>
     </select>
+
+    <select id="querySchoolByIdList" resultMap="schoolList" parameterType="java.util.List">
+        select * from school
+        <where>
+            valid_flag = 1
+            <if test="list != null">
+                and id in
+                <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
 </mapper>

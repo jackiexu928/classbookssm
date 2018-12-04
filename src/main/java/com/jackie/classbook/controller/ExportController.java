@@ -44,4 +44,11 @@ public class ExportController extends BaseController {
     public String exportMate(MateExportReqDTO reqDTO){
         return toJSON(exportService.exportMate(reqDTO));
     }
+
+    @RequestMapping(value = "/school",
+                    method = RequestMethod.POST,
+                    produces = {"application/json;charset=UTF-8"})
+    public String exportSchool(BaseIdReqDTO reqDTO){
+        return toJSON(exportService.exportSchool(reqDTO));
+    }
 }
