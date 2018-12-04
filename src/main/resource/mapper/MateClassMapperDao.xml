@@ -142,4 +142,18 @@
         where valid_flag = 1 and account_id = #{accountId,jdbcType=BIGINT}
         GROUP BY class_id
     </select>
+
+    <select id="queryListByAccountIdAndSchoolIdClassId" resultMap="mateClassMapperList" parameterType="MateClassMapper">
+        select * from mate_class_mapper
+        <where>
+            valid_flag = 1 and account_id = #{accountId,jdbcType=BIGINT}
+            <if test="schoolId != null">
+                and school_id = #{schoolId,jdbcType=BIGINT}
+            </if>
+            <if test="classId != null">
+                and class_id = #{classId,jdbcType=BIGINT}
+            </if>
+        </where>
+        order by school_id, class_id
+    </select>
 </mapper>

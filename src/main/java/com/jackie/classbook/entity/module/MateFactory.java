@@ -1,11 +1,16 @@
 package com.jackie.classbook.entity.module;
 
 import com.alibaba.fastjson.JSON;
+import com.jackie.classbook.common.MateTypeEnum;
+import com.jackie.classbook.common.SexEnum;
+import com.jackie.classbook.dto.response.MateExportRespDTO;
 import com.jackie.classbook.dto.response.MateRespDTO;
 import com.jackie.classbook.entity.Mate;
+import com.jackie.classbook.entity.MateClassMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,4 +40,33 @@ public class MateFactory {
         return resultList;
     }
 
+    public static List<MateExportRespDTO> getMateExportRespDTO(List<MateClassMapper> mateClassList, Map<Long, Mate> mateMap){
+        List<MateExportRespDTO> resultList = new ArrayList<>();
+        int serialNum = 1;
+        for (MateClassMapper mateClassMapper : mateClassList){
+            Mate mate = mateMap.get(mateClassMapper.getMateId());
+            MateExportRespDTO mateExportRespDTO = new MateExportRespDTO();
+            mateExportRespDTO.setSerialNum(serialNum);
+            mateExportRespDTO.setSchoolName(mateClassMapper.getSchoolName());
+            mateExportRespDTO.setClassName(mateClassMapper.getClassName());
+            mateExportRespDTO.setName(mateClassMapper.getMateName());
+            mateExportRespDTO.setType(MateTypeEnum.getValue(mateClassMapper.getMateType()));
+            mateExportRespDTO.setMobile(mate.getMobile());
+            mateExportRespDTO.setQq(mate.getQq());
+            mateExportRespDTO.setEmail(mate.getEmail());
+            mateExportRespDTO.setNation(mate.getNation());
+            mateExportRespDTO.setAge(mate.getAge());
+            mateExportRespDTO.setSex(SexEnum.getValue(mate.getSex()));
+            mateExportRespDTO.setProvince(mate.getProvince());
+            mateExportRespDTO.setCity(mate.getCity());
+            mateExportRespDTO.setCountry(mate.getCountry());
+            mateExportRespDTO.setTown(mate.getTown());
+            mateExportRespDTO.setVillage(mate.getVillage());
+            mateExportRespDTO.setLiveCity(mate.getLiveCity());
+            mateExportRespDTO.setImpression(mate.getImpression());
+            resultList.add(mateExportRespDTO);
+            serialNum ++;
+        }
+        return resultList;
+    }
 }

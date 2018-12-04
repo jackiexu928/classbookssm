@@ -243,4 +243,17 @@
             #{item}
         </foreach>
     </update>
+
+    <select id="queryMatesByIdList" resultMap="mateList" parameterType="java.util.List">
+        select * from mate
+        <where>
+            valid_flag = 1
+            <if test="list != null">
+                and id in
+                <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
 </mapper>

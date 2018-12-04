@@ -4,16 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.jackie.classbook.common.ClassbookCodeEnum;
 import com.jackie.classbook.common.ClassbookException;
 import com.jackie.classbook.common.TeacherTypeEnum;
-import com.jackie.classbook.dao.ClassDao;
-import com.jackie.classbook.dao.MateClassMapperDao;
-import com.jackie.classbook.dao.TeacherClassMapperDao;
+import com.jackie.classbook.dao.*;
 import com.jackie.classbook.dto.request.BaseIdReqDTO;
+import com.jackie.classbook.dto.request.MateExportReqDTO;
 import com.jackie.classbook.dto.response.ClassExportRespDTO;
 import com.jackie.classbook.dto.response.ExportRespDTO;
+import com.jackie.classbook.dto.response.MateExportRespDTO;
+import com.jackie.classbook.entity.*;
 import com.jackie.classbook.entity.Class;
-import com.jackie.classbook.entity.MateClassMapper;
-import com.jackie.classbook.entity.TeacherClassMapper;
 import com.jackie.classbook.entity.module.MateClassMapperFactory;
+import com.jackie.classbook.entity.module.MateFactory;
 import com.jackie.classbook.process.AbstractService;
 import com.jackie.classbook.process.Context;
 import com.jackie.classbook.service.write.ExportService;
@@ -42,6 +42,10 @@ public class ExportServiceImpl extends AbstractService implements ExportService 
     private TeacherClassMapperDao teacherClassMapperDao;
     @Autowired
     private ClassDao classDao;
+    @Autowired
+    private MateDao mateDao;
+    @Autowired
+    private SchoolDao schoolDao;
 
     @Override
     public Context<BaseIdReqDTO, Void> exportClass(BaseIdReqDTO reqDTO) {
@@ -80,6 +84,58 @@ public class ExportServiceImpl extends AbstractService implements ExportService 
         String[] title= {"序号","校名","届","班级","班主任","任课老师"};
         ExportRespDTO exportRespDTO = new ExportRespDTO();
         exportRespDTO.setFileName("班级信息");
+        exportRespDTO.setTitle(title);
+        exportRespDTO.setContent(ExportContentUtil.getContetn(exportList, title.length));
+        try {
+            ExcelUtil.export(exportRespDTO);
+        } catch (Exception e){
+            throw new ClassbookException("", e.getMessage());
+        }
+        return context;
+    }
+
+    @Override
+    public Context<MateExportReqDTO, Void> exportMate(MateExportReqDTO reqDTO) {
+        MateClassMapper mateClassMapper = new MateClassMapper();
+        mateClassMapper.setAccountId(reqDTO.getAccountId());
+        mateClassMapper.setSchoolId(reqDTO.getSchoolId());
+        mateClassMapper.setClassId(reqDTO.getClassId());
+        List<MateClassMapper> list = mateClassMapperDao.queryListByAccountIdAndSchoolIdClassId(mateClassMapper);
+        if (list == null){
+            throw new ClassbookException(ClassbookCodeEnum.NO_RECORD);
+        }
+        List<Long> idList = new ArrayList<>();
+        for (MateClassMapper mate : list){
+            idList.add(mate.getMateId());
+        }
+        List<Mate> mateList = mateDao.queryMatesByIdList(idList);
+        Map<Long, Mate> mateMap = new HashMap<>();
+        if (mateList != null && mateList.size() > 0){
+            for (Mate mate : mateList){
+                mateMap.put(mate.getId(), mate);
+            }
+        }
+        List<MateExportRespDTO> exportList = MateFactory.getMateExportRespDTO(list, mateMap);
+        Context<MateExportReqDTO, Void> context = new Context<>();
+        String fileName = "";
+        if (reqDTO.getSchoolId() != null){
+            School school = schoolDao.querySchoolById(reqDTO.getSchoolId());
+            if (school == null){
+                throw new ClassbookException(ClassbookCodeEnum.NO_RECORD);
+            }
+            fileName += school.getSchoolName();
+        }
+        if (reqDTO.getClassId() != null){
+            Class clazz = classDao.queryById(reqDTO.getClassId());
+            if (clazz == null){
+                throw new ClassbookException(ClassbookCodeEnum.NO_RECORD);
+            }
+            fileName += clazz.getClassName();
+        }
+        String[] title= {"序号","校名","班级","姓名","类型","手机","QQ","邮箱","民族","年龄","性别","省","城市",
+                "县/区","镇/街道","村","居住城市","印象"};
+        ExportRespDTO exportRespDTO = new ExportRespDTO();
+        exportRespDTO.setFileName(fileName + "同学信息");
         exportRespDTO.setTitle(title);
         exportRespDTO.setContent(ExportContentUtil.getContetn(exportList, title.length));
         try {

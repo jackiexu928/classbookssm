@@ -22,4 +22,6 @@ public interface MateClassMapperDao {
     int deleteByIdList(Map map);
 
     List<MateClassMapper> queryClassListByAccountId(MateClassMapper mateClassMapper);
+
+    List<MateClassMapper> queryListByAccountIdAndSchoolIdClassId(MateClassMapper mateClassMapper);
 }

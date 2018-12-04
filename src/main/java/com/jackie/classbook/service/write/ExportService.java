@@ -1,6 +1,7 @@
 package com.jackie.classbook.service.write;
 
 import com.jackie.classbook.dto.request.BaseIdReqDTO;
+import com.jackie.classbook.dto.request.MateExportReqDTO;
 import com.jackie.classbook.process.Context;
 
 /**
@@ -12,4 +13,6 @@ import com.jackie.classbook.process.Context;
  */
 public interface ExportService {
     Context<BaseIdReqDTO, Void> exportClass(BaseIdReqDTO reqDTO);
+
+    Context<MateExportReqDTO, Void> exportMate(MateExportReqDTO reqDTO);
 }

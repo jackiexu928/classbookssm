@@ -40,7 +40,7 @@ public class ExcelUtil {
         /**
          * 标题栏
          */
-        jxl.write.WritableFont wfcNav =new jxl.write.WritableFont(WritableFont.ARIAL,12, WritableFont.BOLD,false, UnderlineStyle.NO_UNDERLINE,jxl.format.Colour.BLACK);
+        jxl.write.WritableFont wfcNav =new jxl.write.WritableFont(WritableFont.TIMES,12, WritableFont.BOLD,false, UnderlineStyle.NO_UNDERLINE,jxl.format.Colour.BLACK);
         WritableCellFormat wcfN=new WritableCellFormat(wfcNav);
 
         Color color = Color.decode("#000000"); // 自定义的颜色
@@ -54,16 +54,16 @@ public class ExcelUtil {
             lab = new Label(i, 0, title[i], wcfN); //Label(col,row,str);
             sheet.addCell(lab);
             //sheet.setColumnView(i, new String(title[i]).length() * 5);
-            //sheet.setColumnView(i, 20);//列宽
+            sheet.setColumnView(i, 20);//列宽
         }
 
         /**
          * 内容
          */
-        jxl.write.WritableFont wfcontent =new jxl.write.WritableFont(WritableFont.ARIAL,12, WritableFont.NO_BOLD,false,UnderlineStyle.NO_UNDERLINE, Colour.BLACK);//字体、颜色
+        jxl.write.WritableFont wfcontent =new jxl.write.WritableFont(WritableFont.TIMES,12, WritableFont.NO_BOLD,false,UnderlineStyle.NO_UNDERLINE, Colour.BLACK);//字体、颜色
         WritableCellFormat wcfcontent = new WritableCellFormat(wfcontent);
         wcfcontent.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN,jxl.format.Colour.BLACK); //BorderLineStyle边框
-        wcfcontent.setAlignment(Alignment.CENTRE);//居中对齐
+        wcfcontent.setAlignment(Alignment.LEFT);//左对齐
         CellView cellView = new CellView();
         cellView.setSize(200);
         //cellView.setAutosize(true); //设置自动大小  也许版本问题，本项目依赖的版本不支持
@@ -73,7 +73,7 @@ public class ExcelUtil {
                 //sheet.setColumnView(i, 20);//根据内容自动设置列宽
                 lab = new Label(j, i+1, content[i][j], wcfcontent); //Label(col,row,str);
                 sheet.addCell(lab);
-                int length = new String(content[i][j]).length();
+                /*int length = new String(content[i][j]).length();
                 if (length == 1){
                     sheet.setColumnView(j, 5);
                 } else if (length > 1 && length < 7){
@@ -82,7 +82,7 @@ public class ExcelUtil {
                     sheet.setColumnView(j, length * 3);
                 } else {
                     sheet.setColumnView(j, length * 2);
-                }
+                }*/
                 //sheet.setColumnView(j, new String(content[i][j]).length() * 5);
                 //sheet.setColumnView(j, 20);
             }

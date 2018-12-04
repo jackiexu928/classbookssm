@@ -29,4 +29,6 @@ public interface MateDao {
     List<Mate> queryMates(Map map);
 
     int deleteByIdList(List<Long> idList);
+
+    List<Mate> queryMatesByIdList(List<Long> idList);
 }
