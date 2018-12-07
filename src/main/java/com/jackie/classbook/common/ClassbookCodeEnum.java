@@ -60,7 +60,9 @@ public enum ClassbookCodeEnum {
 
     ILLGAL_MOBILE("ILLGAL_MOBILE","手机号错误"),
 
-    ILLGAL_EMAIL("ILLGAL_EMAIL","邮箱格式错误")
+    ILLGAL_EMAIL("ILLGAL_EMAIL","邮箱格式错误"),
+
+    SCHOOL_NOT_EXIST("SCHOOL_NOT_EXIST","学校不存在")
 
     ;
 

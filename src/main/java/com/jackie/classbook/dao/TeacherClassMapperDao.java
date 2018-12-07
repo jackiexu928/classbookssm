@@ -22,4 +22,6 @@ public interface TeacherClassMapperDao {
     int delete(@Param("classId")Long classId, @Param("teacherId")Long teacherId);
 
     List<TeacherClassMapper> queryListByClassIdAndType(TeacherClassMapper teacherClassMapper);
+
+    List<TeacherClassMapper> queryListByClassIdList(List<Long> classIdList);
 }

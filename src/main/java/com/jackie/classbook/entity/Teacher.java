@@ -10,6 +10,7 @@ package com.jackie.classbook.entity;
 public class Teacher {
     private Long id;            //教师id
     private Long schoolId;      //学校id
+    private String schoolName;  //校名
     private String name;        //姓名
     private Byte sex;           //性别
     private Long mobile;        //手机
@@ -31,6 +32,14 @@ public class Teacher {
 
     public void setSchoolId(Long schoolId) {
         this.schoolId = schoolId;
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 
     public String getName() {

@@ -6,6 +6,7 @@
     <resultMap id="teacherList" type="Teacher">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="school_id" jdbcType="BIGINT" property="schoolId"/>
+        <result column="school_name" jdbcType="VARCHAR" property="schoolName"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="sex" jdbcType="TINYINT" property="sex"/>
         <result column="mobile" jdbcType="BIGINT" property="mobile"/>
@@ -22,6 +23,9 @@
             </if>
             <if test="schoolId != null">
                 school_id,
+            </if>
+            <if test="schoolName != null">
+                school_name,
             </if>
             <if test="name != null">
                 name,
@@ -48,6 +52,9 @@
             </if>
             <if test="schoolId != null">
                 #{schoolId,jdbcType=BIGINT},
+            </if>
+            <if test="schoolName != null">
+                #{schoolName,jdbcType=VARCHAR},
             </if>
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
@@ -126,4 +133,18 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="queryByIdList" resultMap="teacherList" parameterType="java.util.List">
+        select * from teacher
+        <where>
+            valid_flag = 1
+            <if test="list != null">
+                and id in
+                <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by school_id
+    </select>
 </mapper>

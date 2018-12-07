@@ -7,22 +7,22 @@ import com.jackie.classbook.common.TeacherTypeEnum;
 import com.jackie.classbook.dao.*;
 import com.jackie.classbook.dto.request.BaseIdReqDTO;
 import com.jackie.classbook.dto.request.MateExportReqDTO;
-import com.jackie.classbook.dto.response.ClassExportRespDTO;
-import com.jackie.classbook.dto.response.ExportRespDTO;
-import com.jackie.classbook.dto.response.MateExportRespDTO;
-import com.jackie.classbook.dto.response.SchoolExportRespDTO;
+import com.jackie.classbook.dto.response.*;
 import com.jackie.classbook.entity.*;
 import com.jackie.classbook.entity.Class;
 import com.jackie.classbook.entity.module.MateClassMapperFactory;
 import com.jackie.classbook.entity.module.MateFactory;
 import com.jackie.classbook.entity.module.SchoolFactory;
+import com.jackie.classbook.entity.module.TeacherFactory;
 import com.jackie.classbook.process.AbstractService;
 import com.jackie.classbook.process.Context;
 import com.jackie.classbook.service.write.ExportService;
 import com.jackie.classbook.util.ExcelUtil;
 import com.jackie.classbook.util.ExportContentUtil;
+import com.jackie.classbook.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,13 +48,19 @@ public class ExportServiceImpl extends AbstractService implements ExportService 
     private MateDao mateDao;
     @Autowired
     private SchoolDao schoolDao;
+    @Autowired
+    private AccountDao accountDao;
+    @Autowired
+    private TeacherDao teacherDao;
+    @Autowired
+    private AccountClassMapperDao accountClassMapperDao;
 
     @Override
     public Context<BaseIdReqDTO, Void> exportClass(BaseIdReqDTO reqDTO) {
         MateClassMapper mateClassMapper = new MateClassMapper();
         mateClassMapper.setAccountId(reqDTO.getId());
         List<MateClassMapper> list = mateClassMapperDao.queryClassListByAccountId(mateClassMapper);
-        if (list == null){
+        if (ListUtil.isEmpty(list)){
             throw new ClassbookException(ClassbookCodeEnum.NO_RECORD);
         }
         Map<String, String> map = new HashMap<>();
@@ -103,7 +109,7 @@ public class ExportServiceImpl extends AbstractService implements ExportService 
         mateClassMapper.setSchoolId(reqDTO.getSchoolId());
         mateClassMapper.setClassId(reqDTO.getClassId());
         List<MateClassMapper> list = mateClassMapperDao.queryListByAccountIdAndSchoolIdClassId(mateClassMapper);
-        if (list == null){
+        if (ListUtil.isEmpty(list)){
             throw new ClassbookException(ClassbookCodeEnum.NO_RECORD);
         }
         List<Long> idList = new ArrayList<>();
@@ -112,7 +118,7 @@ public class ExportServiceImpl extends AbstractService implements ExportService 
         }
         List<Mate> mateList = mateDao.queryMatesByIdList(idList);
         Map<Long, Mate> mateMap = new HashMap<>();
-        if (mateList != null && mateList.size() > 0){
+        if (ListUtil.isNotEmpty(mateList)){
             for (Mate mate : mateList){
                 mateMap.put(mate.getId(), mate);
             }
@@ -150,16 +156,11 @@ public class ExportServiceImpl extends AbstractService implements ExportService 
 
     @Override
     public Context<BaseIdReqDTO, Void> exportSchool(BaseIdReqDTO reqDTO) {
-        MateClassMapper mateClassMapper = new MateClassMapper();
-        mateClassMapper.setAccountId(reqDTO.getId());
-        List<MateClassMapper> list = mateClassMapperDao.querySchoolListByAccountId(mateClassMapper);
-        if (list == null){
-            throw new ClassbookException(ClassbookCodeEnum.NO_RECORD);
+        Account account = accountDao.queryAccountById(reqDTO.getId());
+        if (account == null){
+            throw new ClassbookException(ClassbookCodeEnum.ACCOUNT_NOT_EXIST);
         }
-        List<Long> idList = new ArrayList<>();
-        for (MateClassMapper mate : list){
-            idList.add(mate.getSchoolId());
-        }
+        List<Long> idList = getAccountSchoolIdList(account);
         List<School> schoolList = schoolDao.querySchoolByIdList(idList);
         List<SchoolExportRespDTO> exportList = SchoolFactory.getSchoolExportRespDTO(schoolList);
         Context<BaseIdReqDTO, Void> context = new Context<>();
@@ -174,5 +175,91 @@ public class ExportServiceImpl extends AbstractService implements ExportService 
             throw new ClassbookException("", e.getMessage());
         }
         return context;
+    }
+
+    @Override
+    public Context<MateExportReqDTO, Void> exportTeacher(MateExportReqDTO reqDTO) {
+        List<TeacherExportRespDTO> exportList = new ArrayList<>();
+        List<Long> idList = new ArrayList<>();
+        String schoolName = null;
+        String className = null;
+        if (reqDTO.getClassId() != null){
+            TeacherClassMapper teacherClassMapper = new TeacherClassMapper();
+            teacherClassMapper.setClassId(reqDTO.getClassId());
+            List<TeacherClassMapper> teacherClassMapperList = teacherClassMapperDao.queryListByClassIdAndType(teacherClassMapper);
+            if (ListUtil.isNotEmpty(teacherClassMapperList)) {
+                for (TeacherClassMapper teacher : teacherClassMapperList) {
+                    idList.add(teacher.getTeacherId());
+                }
+            }
+            Class clazz = classDao.queryById(reqDTO.getClassId());
+            schoolName = schoolDao.querySchoolById(clazz.getSchoolId()).getSchoolName();
+            className = clazz.getClassName();
+        } else {
+            AccountClassMapper accountClassMapper = new AccountClassMapper();
+            accountClassMapper.setAccountId(reqDTO.getAccountId());
+            if (reqDTO.getSchoolId() != null) {
+                accountClassMapper.setSchoolId(reqDTO.getSchoolId());
+                schoolName = schoolDao.querySchoolById(reqDTO.getSchoolId()).getSchoolName();
+            }
+            List<AccountClassMapper> classList = accountClassMapperDao.queryList(accountClassMapper);
+            if (ListUtil.isEmpty(classList)){
+                throw new ClassbookException(ClassbookCodeEnum.NO_RECORD);
+            }
+            List<Long> classIdList = new ArrayList<>();
+            for (AccountClassMapper accountClass : classList){
+                classIdList.add(accountClass.getClassId());
+            }
+            List<TeacherClassMapper> teacherClassMapperList = teacherClassMapperDao.queryListByClassIdList(classIdList);
+            if (ListUtil.isEmpty(teacherClassMapperList)){
+                throw new ClassbookException(ClassbookCodeEnum.NO_RECORD);
+            }
+            for (TeacherClassMapper teacherClassMapper : teacherClassMapperList){
+                idList.add(teacherClassMapper.getTeacherId());
+            }
+        }
+        List<Teacher> teacherList = teacherDao.queryByIdList(idList);
+        exportList = TeacherFactory.getTeacherExportRespDTO(teacherList);
+        Context<MateExportReqDTO, Void> context = new Context<>();
+        String fileName = "";
+        if (!StringUtils.isEmpty(schoolName)){
+            fileName += schoolName;
+        }
+        if (!StringUtils.isEmpty(className)){
+            fileName += className;
+        }
+        String[] title= {"序号","校名","姓名","性别","手机","邮箱","所教科目"};
+        ExportRespDTO exportRespDTO = new ExportRespDTO();
+        exportRespDTO.setFileName(fileName + "教师信息");
+        exportRespDTO.setTitle(title);
+        exportRespDTO.setContent(ExportContentUtil.getContetn(exportList, title.length));
+        try {
+            ExcelUtil.export(exportRespDTO);
+        } catch (Exception e){
+            throw new ClassbookException("", e.getMessage());
+        }
+        return context;
+    }
+
+    /**
+     * 获取用户学校
+     * @param account
+     * @return
+     */
+    public List<Long> getAccountSchoolIdList(Account account){
+        List<Long> idList = new ArrayList<>();
+        if (account.getPrimarySchoolId() != null){
+            idList.add(account.getPrimarySchoolId());
+        }
+        if (account.getJuniorSchoolId() != null){
+            idList.add(account.getJuniorSchoolId());
+        }
+        if (account.getSeniorSchoolId() != null){
+            idList.add(account.getSeniorSchoolId());
+        }
+        if (account.getUniversityId() != null){
+            idList.add(account.getUniversityId());
+        }
+        return idList;
     }
 }

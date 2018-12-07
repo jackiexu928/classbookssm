@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jackie.classbook.dao.AccountClassMapperDao">
+    <resultMap id="accountClassMapperList" type="AccountClassMapper">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="account_id" jdbcType="BIGINT" property="accountId"/>
+        <result column="school_id" jdbcType="BIGINT" property="schoolId"/>
+        <result column="class_id" jdbcType="BIGINT" property="classId"/>
+        <result column="valid_flag" jdbcType="TINYINT" property="validFlag"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="accountClassMapperList" parameterType="AccountClassMapper">
+        select * from account_class_mapper
+        <where>
+            valid_flag = 1 and account_id = #{accountId,jdbcType=BIGINT}
+            <if test="schoolId != null">
+                and school_id = #{schoolId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -15,7 +15,7 @@
         <result column="valid_flag" jdbcType="TINYINT" property="validFlag"/>
     </resultMap>
 
-    <insert id="insert" parameterType="com.jackie.classbook.entity.TeacherClassMapper">
+    <insert id="insert" parameterType="TeacherClassMapper">
         insert into teacher_class_mapper
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -77,7 +77,7 @@
         </trim>
     </insert>
 
-    <select id="queryList" resultMap="teacherClassMapperList" parameterType="com.jackie.classbook.entity.TeacherClassMapper">
+    <select id="queryList" resultMap="teacherClassMapperList" parameterType="TeacherClassMapper">
         select * from teacher_class_mapper
         <where>
             valid_flag = 1
@@ -126,7 +126,7 @@
         where class_id = #{classId,jdbcType=BIGINT} and teacher_id = #{teacherId,jdbcType=BIGINT}
     </update>
 
-    <select id="queryListByClassIdAndType" resultMap="teacherClassMapperList" parameterType="com.jackie.classbook.entity.TeacherClassMapper">
+    <select id="queryListByClassIdAndType" resultMap="teacherClassMapperList" parameterType="TeacherClassMapper">
         select * from teacher_class_mapper
         <where>
             valid_flag = 1
@@ -135,6 +135,19 @@
             </if>
             <if test="teacherType != null">
                 and teacher_type = #{teacherType,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryListByClassIdList" resultMap="teacherClassMapperList" parameterType="java.util.List">
+        select * from teacher_class_mapper
+        <where>
+            valid_flag = 1
+            <if test="list != null">
+                and class_id in
+                <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
         </where>
     </select>

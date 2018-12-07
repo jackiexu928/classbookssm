@@ -18,4 +18,5 @@ public interface ExportService {
 
     Context<BaseIdReqDTO, Void> exportSchool(BaseIdReqDTO reqDTO);
 
+    Context<MateExportReqDTO, Void> exportTeacher(MateExportReqDTO reqDTO);
 }

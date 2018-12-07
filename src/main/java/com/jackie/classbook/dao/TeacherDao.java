@@ -23,4 +23,6 @@ public interface TeacherDao {
     Teacher queryByMobile(Long mobile);
 
     Teacher queryByEmail(String email);
+
+    List<Teacher> queryByIdList(List<Long> idList);
 }

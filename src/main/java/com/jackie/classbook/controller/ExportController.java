@@ -45,10 +45,27 @@ public class ExportController extends BaseController {
         return toJSON(exportService.exportMate(reqDTO));
     }
 
+    /**
+     * 导出学校信息
+     * @param reqDTO
+     * @return
+     */
     @RequestMapping(value = "/school",
                     method = RequestMethod.POST,
                     produces = {"application/json;charset=UTF-8"})
     public String exportSchool(BaseIdReqDTO reqDTO){
         return toJSON(exportService.exportSchool(reqDTO));
+    }
+
+    /**
+     * 导出老师信息
+     * @param reqDTO
+     * @return
+     */
+    @RequestMapping(value = "/teacher",
+                    method = RequestMethod.POST,
+                    produces = {"application/json;charset=UTF-8"})
+    public String exportTeacher(MateExportReqDTO reqDTO){
+        return toJSON(exportService.exportTeacher(reqDTO));
     }
 }

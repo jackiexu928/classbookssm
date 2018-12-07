@@ -3,10 +3,12 @@ package com.jackie.classbook.service.write.impl;
 import com.alibaba.fastjson.JSON;
 import com.jackie.classbook.common.ClassbookCodeEnum;
 import com.jackie.classbook.common.ClassbookException;
+import com.jackie.classbook.dao.SchoolDao;
 import com.jackie.classbook.dao.TeacherClassMapperDao;
 import com.jackie.classbook.dao.TeacherDao;
 import com.jackie.classbook.dto.request.TeacherAddReqDTO;
 import com.jackie.classbook.dto.request.TeacherUpdateReqDTO;
+import com.jackie.classbook.entity.School;
 import com.jackie.classbook.entity.Teacher;
 import com.jackie.classbook.entity.TeacherClassMapper;
 import com.jackie.classbook.process.AbstractService;
@@ -28,10 +30,17 @@ public class TeacherWriteServiceImpl extends AbstractService implements TeacherW
     private TeacherDao teacherDao;
     @Autowired
     private TeacherClassMapperDao teacherClassMapperDao;
+    @Autowired
+    private SchoolDao schoolDao;
 
     @Override
     public Context<TeacherAddReqDTO, Void> addTeacher(TeacherAddReqDTO reqDTO) {
         Teacher teacher = JSON.parseObject(JSON.toJSONString(reqDTO), Teacher.class);
+        School school = schoolDao.querySchoolById(reqDTO.getSchoolId());
+        if (school == null){
+            throw new ClassbookException(ClassbookCodeEnum.SCHOOL_NOT_EXIST);
+        }
+        teacher.setSchoolName(school.getSchoolName());
         teacher.setValidFlag((byte)1);
         //校验手机号和邮箱，不能有重复
         if (teacher.getMobile() != null){

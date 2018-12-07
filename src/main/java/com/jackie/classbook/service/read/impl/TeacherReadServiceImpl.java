@@ -34,8 +34,6 @@ public class TeacherReadServiceImpl extends AbstractQueryService implements Teac
     @Autowired
     private TeacherDao teacherDao;
     @Autowired
-    private SchoolDao schoolDao;
-    @Autowired
     private TeacherClassMapperDao teacherClassMapperDao;
 
     @Override
@@ -58,7 +56,7 @@ public class TeacherReadServiceImpl extends AbstractQueryService implements Teac
         TeacherDetailRespDTO teacherDetailRespDTO = new TeacherDetailRespDTO();
         teacherDetailRespDTO.setTeacherId(teacher.getId());
         teacherDetailRespDTO.setSchoolId(teacher.getSchoolId());
-        teacherDetailRespDTO.setSchoolName(getSchool(teacher.getSchoolId()));
+        teacherDetailRespDTO.setSchoolName(teacher.getSchoolName());
         teacherDetailRespDTO.setName(teacher.getName());
         teacherDetailRespDTO.setSex(teacher.getSex());
         teacherDetailRespDTO.setMobile(teacher.getMobile());
@@ -68,8 +66,5 @@ public class TeacherReadServiceImpl extends AbstractQueryService implements Teac
         Context<BaseIdReqDTO, TeacherDetailRespDTO> context = new Context<>();
         context.setResult(teacherDetailRespDTO);
         return context;
-    }
-    public String getSchool(Long schoolId){
-        return schoolDao.querySchoolById(schoolId).getSchoolName();
     }
 }
