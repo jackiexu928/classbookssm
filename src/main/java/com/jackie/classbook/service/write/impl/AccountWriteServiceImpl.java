@@ -19,6 +19,7 @@ import com.jackie.classbook.entity.module.AccountFactory;
 import com.jackie.classbook.process.AbstractService;
 import com.jackie.classbook.process.Context;
 import com.jackie.classbook.service.write.AccountWriteService;
+import com.jackie.classbook.util.EmailSender;
 import com.jackie.classbook.util.SignUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,8 @@ public class AccountWriteServiceImpl extends AbstractService implements AccountW
     private NationDao nationDao;
     @Autowired
     private SchoolDao schoolDao;
+    @Autowired
+    private EmailSender emailSender;
 
     @Override
     public Context<LoginReqDTO, AccountLoginRespDTO> login(LoginReqDTO reqDTO) {
@@ -177,4 +180,14 @@ public class AccountWriteServiceImpl extends AbstractService implements AccountW
         //TODO 重置完成短信、邮件通知
         return context;
     }
+
+    /*@Override
+    public Context<BaseIdReqDTO, Void> send(BaseIdReqDTO reqDTO) {
+        Context<BaseIdReqDTO, Void> context = new Context<>();
+        String email = "343141195@qq.com";
+        String title = "hello world";
+        String content = "hello jackie, nice to meet you!";
+        emailSender.sendHtmlMail(email, title, content);
+        return context;
+    }*/
 }
